@@ -4,7 +4,8 @@ import nvidia_smi
 import os
 import time
 
-os.system("./cell 1000 1000 1000 2 500 &")
+#os.system("./cell 1000 1000 1000 2 500 &")
+os.system("/home/yzamora/kmeans/benchmark.sh &")
 strResult = ''
 results = ''
 results +='Memory Total \t Memory Used \t    Memory Free \t Power Drawed \t Clocks \t \n'
