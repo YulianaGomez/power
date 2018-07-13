@@ -16,4 +16,4 @@ Can be viewed through git
 * Gaussian\_power.ipynb		Gaussian Process Regression on Stream
 * dl\_power.ipynb		Deep learning baseline,tuning network topology, wider network top., and evaluation
 				of deep learning models
-*  
+  
