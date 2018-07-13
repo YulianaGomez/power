@@ -10,7 +10,7 @@ Usage: cell dim3 dim2 dim1 timesteps pyramid_height
 
 python gpu_profile.py
 
-#Results
+# Results
 Results will be printed in gpu_clean.results. Results will be of memory available, memory used, memory left, power used, and clock
 
 Current run time is 30 seconds. Change value given to end_time.
