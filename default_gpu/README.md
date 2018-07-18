@@ -10,9 +10,9 @@ Python 3.6.5
 
 ## Config_results:
 * clock_allinfo.default - result from nvidia-smi -q -d CLOCK
-** Includes current clock configuration, max clocks, application clocks, etc
+    * Includes current clock configuration, max clocks, application clocks, etc
 * clock_min.default 
-** results from pynvml wrapper - returns current default clock for memory and graphics
+    * results from pynvml wrapper - returns current default clock for memory and graphics
 * config_all.default - result from nvidia-smi -q 
-** Displays GPU infor - includes all data list in GPU attributes of smi document
+    * Displays GPU infor - includes all data list in GPU attributes of smi document
 * performance.default - performance state for the GPU
