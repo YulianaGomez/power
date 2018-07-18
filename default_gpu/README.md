@@ -3,7 +3,8 @@
 Python 3.6.5
 
 ## How to run - saving configurations:
-* python default_gpu.py  - will save all current configurations in config_results directory. config_results directory will be created where script is run
+* python default_gpu.py
+    * will save all current configurations in config_results directory. config_results directory will be created where script is run
 
 ## Reset Clocks
 * python default_gpu.py -r  -  will reset GPU clocks
