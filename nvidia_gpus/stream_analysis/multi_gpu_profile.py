@@ -18,17 +18,19 @@ loops = 0
 print("ugghh")
 
 blocks = [128, 256, 516, 1024]
-for n_size in range(1000000,10000100,100):
+for n_size in range(10000000,10000200,100):
     for block_size in blocks:
         print ("N size: %i, Block size: %i" %(n_size,block_size))
         #os.system("./stream_long.exe -B %i -N %i >> stream_benchmark.results" % (block_size,n_size))
-        subprocess.run("./stream_bigtime.exe -B %i -N %i >> stream_all_benchmark.results" % (block_size,n_size))
-        while p.pull() == none:
+        pargs = ["./stream_bigtime.exe","-B",str(block_size),"-N",str(n_size),">>","stream_all_benchmark.results"]
+        p = subprocess.Popen(pargs)
+        #p = subprocess.Popen("./stream_bigtime.exe -B %i -N %i >> stream_all_benchmark.results" % (block_size,n_size))
+        while p.poll() == None:
             if loops%10 == 0:
                 print("Obtaining stat results: Loop %i"% loops)
             loops += 1
             for i in range(0, deviceCount):
-                print ("in device loop")
+                #print ("in device loop")
                 handle = nvmlDeviceGetHandleByIndex(i)
                 strResult += "N size: %i, Block size: %i" %(n_size,block_size)
                 """try:
