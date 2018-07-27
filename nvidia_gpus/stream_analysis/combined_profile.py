@@ -27,7 +27,7 @@ for n_size in range(100,200,100):
         combined_results = open("combined.n" + str(n_size) + "b" + str(block_size) + ".results",'a')
         #combined_results.write(results)
         combined_results.flush()
-        print ("N size: %i, Block size: %i" %(n_size,block_size))
+        print ("N size: {0:10d}, Block size: {1:10d}".format(n_size,block_size))
         #os.system("./stream_long.exe -B %i -N %i >> stream_benchmark.results" % (block_size,n_size))
         pargs = ["./stream_bigtime.exe","-B",str(block_size),"-N",str(n_size)]
         p = subprocess.Popen(pargs,stdout=combined_results,stderr = combined_results,shell=True)
@@ -39,7 +39,7 @@ for n_size in range(100,200,100):
             for i in range(0, deviceCount):
                 #print ("in device loop")
                 handle = nvmlDeviceGetHandleByIndex(i)
-                strResult += "N size: %i, Block size: %i" %(n_size,block_size)
+                strResult += "N size: {0:10d}, Block size: {1:10d}".format(n_size,block_size)
                 """try:
                     powMan = nvmlDeviceGetPowerManagementMode(handle)
                     powManStr = 'Supported' if powMan != 0 else 'N/A'
@@ -72,12 +72,12 @@ for n_size in range(100,200,100):
 
 
                 strResult += '    <fb_memory_usage>\n'
-                strResult += '      <total>' + mem_total + '</total>\n'
-                strResult += '      <used>' + mem_used + '</used>\n'
-                strResult += '      <free>' + mem_free + '</free>\n'
+                strResult += '      <total> {0:4d} </total>\n'.format(mem_total)
+                strResult += '      <used> {0:4d} </used>\n'.format(mem_used)
+                strResult += '      <free> {0:4d} </free>\n'.format(mem_free)
                 strResult += '    </fb_memory_usage>\n'
                 if memInfo.used > 0:
-                    results += mem_total + '\t ' + mem_used + '\t    ' + mem_free + '\t   ' + powDrawStr + '\t   ' + graphics +'\n'
+                    results += " {0:4d} \t {1:4d} \t {2:4d} \t {3:4d} \t {4:4d} \n".format(mem_total, mem_used, mem_free, powDrawStr, graphics)
                 combined_results.write(results)
 
     if time.time() > start + end_time : break
