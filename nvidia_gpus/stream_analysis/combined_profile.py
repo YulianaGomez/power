@@ -9,7 +9,7 @@ import time
 #os.system("/home/yzamora/kmeans/benchmark.sh &")
 strResult = ''
 results = ''
-header ='Memory Total \t Memory Used \t    Memory Free \t Power Drawed \t Clocks \t \n'
+header ='Memory Total (MiB) \t Memory Used (MiB) \t    Memory Free (MiB) \t Power Drawed (W) \t Clocks (Mhz) \t \n'
 combined_results = open("combined.results",'a')
 combined_results.write(results)
 combined_results.flush()
@@ -56,15 +56,15 @@ for n_size in range(50,100,50):
                 strResult += "\t power_draw {0:5} /power_draw\n".format(powDrawStr)
                 strResult += '\t clocks\n'
                 try:
-                    graphics = str(nvmlDeviceGetClockInfo(handle, NVML_CLOCK_GRAPHICS)) + ' MHz'
+                    graphics = nvmlDeviceGetClockInfo(handle, NVML_CLOCK_GRAPHICS)
                 except NVMLError as err:
                     graphics = handleError(err)
                 strResult += "\t graphics_clock {0:5} /graphics_clock\n".format(graphics)
                 try:
                     memInfo = nvmlDeviceGetMemoryInfo(handle)
-                    mem_total = str(memInfo.total / 524 / 524) + ' MiB'
-                    mem_used = str(memInfo.used / 524 / 524) + ' MiB'
-                    mem_free = str(memInfo.total / 524 / 524 - memInfo.used / 524 / 524) + ' MiB'
+                    mem_total = memInfo.total / 524 / 524
+                    mem_used = memInfo.used / 524 / 524
+                    mem_free = memInfo.total / 524 / 524 - memInfo.used / 524 / 524
                 except NVMLError as err:
                     error = handleError(err)
                     mem_total = error
@@ -78,7 +78,7 @@ for n_size in range(50,100,50):
                 strResult += "\t free {0:5} /free\n".format(mem_free)
                 strResult += '\t fb_memory_usage\n'
                 if memInfo.used > 0:
-                    results = " {0:5d} \t {1:5} \t {2:5} \t {3:5} \t {4:5} \n".format(mem_total, mem_used, mem_free, powDrawStr, graphics)
+                    results = " {0:5d} \t {1:5} \t {2:5} \t {3:5} \t {4:5} \n".format(mem_total, mem_used, mem_free, powDraw, graphics)
                 combined_results.write(results)
 
 #if time.time() > start + end_time : break
