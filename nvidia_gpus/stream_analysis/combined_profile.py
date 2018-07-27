@@ -23,9 +23,9 @@ loops = 0
 blocks = [128, 256, 516, 1024]
 for n_size in range(100,200,100):
     for block_size in blocks:
-        results +='Memory Total \t Memory Used \t    Memory Free \t Power Drawed \t Clocks \t \n'
-        combined_results = open("combined.n" + n_size + "b" + block_size + ".results" + ,'a')
-        combined_results.write(results)
+        #results +='Memory Total \t Memory Used \t    Memory Free \t Power Drawed \t Clocks \t \n'
+        combined_results = open("combined.n" + str(n_size) + "b" + str(block_size) + ".results",'a')
+        #combined_results.write(results)
         combined_results.flush()
         print ("N size: %i, Block size: %i" %(n_size,block_size))
         #os.system("./stream_long.exe -B %i -N %i >> stream_benchmark.results" % (block_size,n_size))
