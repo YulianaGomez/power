@@ -1,0 +1,41 @@
+==65156== NVPROF is profiling process 65156, command: ./ex2_cublas
+      1     16     31     46     61     76     91    106    121    136    151    166    181    196    211
+      2     17     32     47     62     77     92    107    122    137    152    167    182    197    212
+      3   3456    396    576    756    936   1116   1296   1476   1656   1836   2016   2196   2376   2556
+      4    304     34     49     64     79     94    109    124    139    154    169    184    199    214
+      5    320     35     50     65     80     95    110    125    140    155    170    185    200    215
+      6    336     36     51     66     81     96    111    126    141    156    171    186    201    216
+      7    352     37     52     67     82     97    112    127    142    157    172    187    202    217
+      8    368     38     53     68     83     98    113    128    143    158    173    188    203    218
+      9    384     39     54     69     84     99    114    129    144    159    174    189    204    219
+     10    400     40     55     70     85    100    115    130    145    160    175    190    205    220
+     11    416     41     56     71     86    101    116    131    146    161    176    191    206    221
+     12    432     42     57     72     87    102    117    132    147    162    177    192    207    222
+     13    448     43     58     73     88    103    118    133    148    163    178    193    208    223
+     14    464     44     59     74     89    104    119    134    149    164    179    194    209    224
+==65156== Profiling application: ./ex2_cublas
+==65156== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   41.39%  3.6160us         2  1.8080us  1.4720us  2.1440us  void scal_kernel_val<float, float, int=0>(cublasScalParamsVal<float, float>)
+                   39.19%  3.4240us         2  1.7120us  1.5680us  1.8560us  [CUDA memcpy HtoD]
+                   19.41%  1.6960us         1  1.6960us  1.6960us  1.6960us  [CUDA memcpy DtoH]
+      API calls:   61.32%  671.50ms         4  167.88ms  11.616us  670.97ms  cudaMalloc
+                   36.27%  397.15ms         5  79.429ms  7.8240us  396.41ms  cudaFree
+                    1.84%  20.103ms      1480  13.583us     120ns  1.0417ms  cuDeviceGetAttribute
+                    0.37%  4.0127ms        16  250.79us  209.77us  658.69us  cuDeviceTotalMem
+                    0.18%  1.9428ms        16  121.43us  88.531us  530.09us  cuDeviceGetName
+                    0.02%  165.29us        32  5.1650us  3.8620us  12.890us  cudaFuncSetAttribute
+                    0.01%  80.804us         2  40.402us  12.372us  68.432us  cudaLaunch
+                    0.01%  72.632us         3  24.210us  15.735us  34.776us  cudaMemcpy
+                    0.00%  12.373us        16     773ns     412ns  3.8780us  cudaEventCreateWithFlags
+                    0.00%  10.263us         2  5.1310us  3.6960us  6.5670us  cudaThreadSynchronize
+                    0.00%  8.0470us        16     502ns     370ns  1.5360us  cudaEventDestroy
+                    0.00%  6.8840us        24     286ns     146ns  1.5140us  cuDeviceGet
+                    0.00%  5.4370us        11     494ns     251ns  2.3390us  cudaDeviceGetAttribute
+                    0.00%  3.5410us         2  1.7700us     202ns  3.3390us  cudaSetupArgument
+                    0.00%  1.7800us         4     445ns     145ns  1.1240us  cuDeviceGetCount
+                    0.00%  1.7240us         4     431ns     106ns  1.3030us  cudaGetLastError
+                    0.00%  1.3740us         1  1.3740us  1.3740us  1.3740us  cudaGetDevice
+                    0.00%     823ns         1     823ns     823ns     823ns  cuInit
+                    0.00%     818ns         2     409ns     165ns     653ns  cudaConfigureCall
+                    0.00%     633ns         1     633ns     633ns     633ns  cuDriverGetVersion
