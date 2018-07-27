@@ -1,7 +1,7 @@
 from pynvml import *
 import datetime
 import nvidia_smi
-import os
+import os, errno
 import subprocess
 import time
 
@@ -19,20 +19,26 @@ start = time.time()
 end_time = 30
 loops = 0
 
+try:
+    os.makedirs("combined_results")
+except OSError as e:
+    if e.errno != errno.EEXIST:
+        raise
 
 blocks = [128, 256, 512, 1024]
 #blocks = [128] #, 256, 512, 1024]
-for n_size in range(1000,10000000000,1000):
+for n_size in range(1000,1200,100):
     for block_size in blocks:
         print("this is n_size", n_size)
         #results +='Memory Total \t Memory Used \t    Memory Free \t Power Drawed \t Clocks \t \n'
-        combined_results = open("combined.n" + str(n_size) + "b" + str(block_size) + ".results",'a')
-        combined_rate = open("combined.n" + str(n_size) + "b" + str(block_size) + ".rate",'a')
+        combined_results = open("combined_results/combined.n" + str(n_size) + "b" + str(block_size) + ".results",'a')
+        combined_rate = open("combined_results/combined.n" + str(n_size) + "b" + str(block_size) + ".rate",'a')
         combined_results.write(header)
         combined_results.flush()
         print ("N size: {0:4d}, Block size: {1:4d}".format(n_size,block_size))
         #os.system("./stream_long.exe -B %i -N %i  stream_benchmark.results" % (block_size,n_size))
-        pargs = ["./stream_bigtime.exe","-B",str(block_size),"-N",str(n_size)]
+        #pargs = ["./stream_bigtime.exe","-B",str(block_size),"-N",str(n_size)]
+        pargs = ["./cooley.exe -B %s -N %s" % (str(block_size),str(n_size))]
         print (pargs)
         p = subprocess.Popen(pargs,stdout=combined_rate,stderr = combined_rate,shell=True)
         #p = subprocess.Popen("./stream_bigtime.exe -B %i -N %i  stream_all_benchmark.results" % (block_size,n_size))
