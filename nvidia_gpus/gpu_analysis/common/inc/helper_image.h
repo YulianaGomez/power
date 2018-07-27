@@ -20,7 +20,7 @@
 #include <algorithm>
 
 #include <assert.h>
-#include <exception.h>
+#include </home/yzamora/power/nvidia_gpus/gpu_analysis/common/inc/exception.h>
 #include <math.h>
 
 #ifndef MIN
@@ -34,7 +34,7 @@
 #define EXIT_WAIVED 2
 #endif
 
-#include <helper_string.h>
+#include </home/yzamora/power/nvidia_gpus/gpu_analysis/common/inc/helper_string.h>
 
 // namespace unnamed (internal)
 namespace

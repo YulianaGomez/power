@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <string>
 #include <assert.h>
-#include <exception.h>
+#include </home/yzamora/power/nvidia_gpus/gpu_analysis/common/inc/exception.h>
 #include <math.h>
 
 #include <fstream>
@@ -31,9 +31,9 @@
 #include <algorithm>
 
 // includes, timer, string parsing, image helpers
-#include <helper_timer.h>   // helper functions for timers
-#include <helper_string.h>  // helper functions for string parsing
-#include <helper_image.h>   // helper functions for image compare, dump, data comparisons
+#include </home/yzamora/power/nvidia_gpus/gpu_analysis/common/inc/helper_timer.h>   // helper functions for timers
+#include </home/yzamora/power/nvidia_gpus/gpu_analysis/common/inc/helper_string.h>  // helper functions for string parsing
+#include </home/yzamora/power/nvidia_gpus/gpu_analysis/common/inc/helper_image.h>   // helper functions for image compare, dump, data comparisons
 
 #ifndef EXIT_WAIVED
 #define EXIT_WAIVED 2

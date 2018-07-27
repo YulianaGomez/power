@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <helper_string.h>
+#include </home/yzamora/power/nvidia_gpus/gpu_analysis/common/inc/helper_string.h>
 
 #ifndef EXIT_WAIVED
 #define EXIT_WAIVED 2
