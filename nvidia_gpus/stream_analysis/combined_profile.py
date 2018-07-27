@@ -20,9 +20,11 @@ end_time = 30
 loops = 0
 
 
-blocks = [128, 256, 516, 524]
-for n_size in range(50,100,50):
+blocks = [128, 256, 512, 1024]
+#blocks = [128] #, 256, 512, 1024]
+for n_size in range(1000,10000000000,1000):
     for block_size in blocks:
+        print("this is n_size", n_size)
         #results +='Memory Total \t Memory Used \t    Memory Free \t Power Drawed \t Clocks \t \n'
         combined_results = open("combined.n" + str(n_size) + "b" + str(block_size) + ".results",'a')
         combined_rate = open("combined.n" + str(n_size) + "b" + str(block_size) + ".rate",'a')
@@ -31,6 +33,7 @@ for n_size in range(50,100,50):
         print ("N size: {0:4d}, Block size: {1:4d}".format(n_size,block_size))
         #os.system("./stream_long.exe -B %i -N %i  stream_benchmark.results" % (block_size,n_size))
         pargs = ["./stream_bigtime.exe","-B",str(block_size),"-N",str(n_size)]
+        print (pargs)
         p = subprocess.Popen(pargs,stdout=combined_rate,stderr = combined_rate,shell=True)
         #p = subprocess.Popen("./stream_bigtime.exe -B %i -N %i  stream_all_benchmark.results" % (block_size,n_size))
         while p.poll() == None:
@@ -78,7 +81,7 @@ for n_size in range(50,100,50):
                 strResult += "\t free {0:5} /free\n".format(mem_free)
                 strResult += '\t fb_memory_usage\n'
                 if memInfo.used > 0:
-                    results = " {0:5d} \t {1:5} \t {2:5} \t {3:5} \t {4:5} \n".format(mem_total, mem_used, mem_free, powDraw, graphics)
+                    results = " {0:.5f}\t\t {1:4.5f}\t\t\t{2:.5f}\t\t{3:.5f}\t\t{4:.5f} \n".format(mem_total, mem_used, mem_free, powDraw, graphics)
                 combined_results.write(results)
 
 #if time.time() > start + end_time : break
