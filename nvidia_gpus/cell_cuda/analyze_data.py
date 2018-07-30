@@ -68,12 +68,26 @@ def rate_data(f):
 
     return average_rate, average_time
 
+"""
+    From Stream results data
+    obtaining average rate and time data from all rate files
+"""
+def rate_cleanup():
+    file_rate = glob.glob("*.rate")
+    rate_all_data = {"average rate": [ ], "average time":[ ]}
+    for data in file_rate:
+        f = open(data,"r")
+        average_rate, average_time = rate_data(f)
+        rate_all_data["average time"].append(average_time)
+        rate_all_data["average rate"].append(average_rate)
+    #print (rate_all_data)
+    return rate_all_data
 
 """
-   Plotting data from *all* results file
-   {"Mem Total":0, "Mem Used":2, "Mem Free":4 ,"Power Drawed": 6, "Clocks": 8})
+    Combing data from all results files and calculating averages
+    Data contains memory used, power draw,etc
 """
-def data_analysis():
+def results_cleanup():
     files = glob.glob("*.results")
     num = len(files)
     all_data = defaultdict(list)
@@ -88,27 +102,28 @@ def data_analysis():
         #print (averages)
         for k,v in averages.items():
             all_data[k].append(v)
+    return all_data
 
-    #obtaining average rate and time data from all rate files
-    file_rate = glob.glob("*.rate")
-    rate_all_data = {"average rate": [ ], "average_time":[ ]}
-    for data in file_rate:
-        f = open(data,"r")
-        average_rate, average_time = rate_data(f)
-        rate_all_data["average_time"].append(average_time)
-        rate_all_data["average rate"].append(average_rate)
-    print (rate_all_data)
+"""
+   Plotting data from *all* results file
+   {"Mem Total":0, "Mem Used":2, "Mem Free":4 ,"Power Drawed": 6, "Clocks": 8})
+"""
+def data_analysis():
+    #mem used, mem total, power draw, etc
+    results_all = results_cleanup()
 
+    #average rate and time
+    rate_all = rate_cleanup()
 
-
-    #print ("total averages \n")
-    #print (all_data)
-    x = all_data[2]
-    y = all_data[6]
+    #print (rate_all)
+    
+    x = results_all[2] #mem_used
+    y = results_all[6] #power_drawed
+    y2 = rate_all["average rate"]
     plt.title("PIC(CUDA) Performance Results ")
     plt.ylabel('Memory Used (MiB)')
     plt.xlabel('Power Drawed (Watts)')
-    plt.plot(x,y)
+    plt.plot(y,y2)
     plt.show()
 
 
