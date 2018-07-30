@@ -50,6 +50,26 @@ def average_results(f):
     return (data_dic)
 
 """
+   Calculating average time and average rate from stream data
+"""
+def rate_data(f):
+    #files = glob.glob("*.rate")
+    #files = open("stream_one.rate","r")
+    results = np.array(splitting_data(f))
+    #print(results)
+    all_4 = results[4:]
+    rates = 0
+    time = 0
+    for i in all_4:
+        rates += float(i[1])
+        time += float(i[2])
+    average_rate = (rates/4)
+    average_time = (time/4)
+
+    return average_rate, average_time
+
+
+"""
    Plotting data from *all* results file
    {"Mem Total":0, "Mem Used":2, "Mem Free":4 ,"Power Drawed": 6, "Clocks": 8})
 """
@@ -64,12 +84,25 @@ def data_analysis():
         averages = {}
         f = open(data,"r")
         averages = average_results(f)
-        print("these are the averages: \n")
-        print (averages)
+        #print("these are the averages: \n")
+        #print (averages)
         for k,v in averages.items():
             all_data[k].append(v)
-    print ("total averages \n")
-    print (all_data)
+
+    #obtaining average rate and time data from all rate files
+    file_rate = glob.glob("*.rate")
+    rate_all_data = {"average rate": [ ], "average_time":[ ]}
+    for data in file_rate:
+        f = open(data,"r")
+        average_rate, average_time = rate_data(f)
+        rate_all_data["average_time"].append(average_time)
+        rate_all_data["average rate"].append(average_rate)
+    print (rate_all_data)
+
+
+
+    #print ("total averages \n")
+    #print (all_data)
     x = all_data[2]
     y = all_data[6]
     plt.title("PIC(CUDA) Performance Results ")
@@ -79,16 +112,9 @@ def data_analysis():
     plt.show()
 
 
-
-    #for k,v in mem_dic.items():
-    #    print (k,v)
-    #print (mem_dic[2])
-
-
-
-
 if __name__=="__main__":
     data_file = "gpu_clean.results"
     #f = open(data_file,"r")
     #average_results()
     data_analysis()
+    #rate_data()
