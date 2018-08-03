@@ -50,15 +50,15 @@
 
 // Utilities and system includes
 #include <assert.h>
-#include <helper_string.h>  // helper for shared functions common to CUDA Samples
+#include </home/yzamora/power/nvidia_gpus/gpu_analysis/common/inc/helper_string.h>  // helper for shared functions common to CUDA Samples
 
 // CUDA runtime
-#include <cuda_runtime.h>
-#include <cublas_v2.h>
+#include </soft/compilers/cuda/cuda-9.1.85/include/cuda_runtime.h>
+#include </soft/compilers/cuda/cuda-9.1.85/include/cublas_v2.h>
 
 // CUDA and CUBLAS functions
-#include <helper_functions.h>
-#include <helper_cuda.h>
+#include </home/yzamora/power/nvidia_gpus/gpu_analysis/common/inc/helper_functions.h>
+#include </home/yzamora/power/nvidia_gpus/gpu_analysis/common/inc/helper_cuda.h>
 
 #ifndef min
 #define min(a,b) ((a < b) ? a : b)
