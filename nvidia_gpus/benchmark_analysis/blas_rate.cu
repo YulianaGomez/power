@@ -90,6 +90,20 @@ double times[1][NTIMES];
 int N = 100;
 int bsize = 128;
 float scalar;
+for (j=1;j<argc;j++){
+     if (strcmp(argv[j],"-N") == 0)
+     {
+         j++;
+         N = atoi(argv[j]);
+     }
+     if (strcmp(argv[j],"-B") == 0)
+     {
+         j++;
+         bsize = atoi(argv[j]);
+     }
+ }
+printf(" Blas Benchmark implementation in CUDA\n");
+printf(" Array size (single precision)=%d\n",N);
 
 /* Allocate memory on device */
 cudaMalloc((void**)&d_a, sizeof(float)*N);
@@ -119,6 +133,7 @@ for (k=0; k<NTIMES; k++)
     times[0][k] = mysecond() - times[0][k];
 }
 
+static double bytes = 3 * sizeof(float) * N;
 /* --- Summary ---*/
 
 for (k=1; k<NTIMES; k++)
@@ -127,7 +142,7 @@ for (k=1; k<NTIMES; k++)
 }
 
 avgtime = avgtime/(double(NTIMES-1));
+printf("Rate (MB/s)   Avg time\n");
 
-printf("Average time %11.8f \n", avgtime);
-
+printf("%11.8f %11.8f\n", avgtime, 1.0E-06 * bytes/avgtime);
 }

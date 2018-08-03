@@ -119,6 +119,7 @@ for (k=0; k<NTIMES; k++)
     times[0][k] = mysecond() - times[0][k];
 }
 
+static double bytes = 3 * sizeof(float) * N;
 /* --- Summary ---*/
 
 for (k=1; k<NTIMES; k++)
@@ -127,7 +128,7 @@ for (k=1; k<NTIMES; k++)
 }
 
 avgtime = avgtime/(double(NTIMES-1));
+printf("Rate (MB/s)   Avg time\n");
 
-printf("Average time %11.8f \n", avgtime);
-
+printf("%11.8f %11.8f\n", avgtime, 1.0E-06 * bytes/avgtime);
 }
