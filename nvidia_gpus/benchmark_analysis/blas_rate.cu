@@ -90,6 +90,20 @@ double times[1][NTIMES];
 int N = 100;
 int bsize = 128;
 float scalar;
+for (j=1;j<argc;j++){
+     if (strcmp(argv[j],"-N") == 0)
+     {
+         j++;
+         N = atoi(argv[j]);
+     }
+     if (strcmp(argv[j],"-B") == 0)
+     {
+         j++;
+         bsize = atoi(argv[j]);
+     }
+ }
+printf(" Blas Benchmark implementation in CUDA\n");
+printf(" Array size (single precision)=%d\n",N);
 
 /* Allocate memory on device */
 cudaMalloc((void**)&d_a, sizeof(float)*N);
