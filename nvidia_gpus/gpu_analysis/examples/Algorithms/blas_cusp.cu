@@ -5,6 +5,9 @@
 #include <sys/time.h>
 #include <stdio.h>
 #include <float.h>
+#include <fstream>
+#include <stdlib.h>
+#include <string.h>
 
 #define NTIMES 1000
 
@@ -24,7 +27,8 @@ double mysecond()
         return ( (double) tp.tv_sec + (double) tp.tv_usec * 1.e-6 );
 }
 
-__global__ void blas_ex(float *x, float *y, float *z, int len)
+//__global__ void blas_ex(float scalar, int len)
+void blas_ex(float scalar, int len)
 {
     //avgtime = mysecond();
     // initialize x vector
@@ -40,20 +44,24 @@ __global__ void blas_ex(float *x, float *y, float *z, int len)
     y[1] = 2;
     y[2] = 5000;
     y[3] = 100000;*/
-
+    cusp::array1d<float,cusp::host_memory>x(len, scalar);
+    cusp::array1d<float,cusp::host_memory>y(len, scalar);
+    cusp::array1d<float,cusp::host_memory>z(len);
+    cusp::blas::xmy(x,y,z);
+   /*
     int idx = threadIdx.x + blockIdx.x * blockDim.x;
     if (idx < len)
     {
         // compute y = alpha * x + y
-        cusp::blas::axpy(x,y,10000);
+        cusp::blas::axpy(x,y,scalar);
         // print y
         //cusp::print(y);
 
         // allocate output vector
         //cusp::array1d<float, cusp::host_memory> z(4);
         //Element wise multiplication
-        cusp::blas::xmy(x,y,z)
-        /**
+        cusp::blas::xmy(x,y,z);
+        
         // compute z = x .* y (element-wise multiplication)
         //cusp::blas::xmy(x,y,z);
          print z
@@ -68,11 +76,10 @@ __global__ void blas_ex(float *x, float *y, float *z, int len)
         std::cout << "max(|z_i|) = " << cusp::blas::nrmmax(z) << std::endl;
         //avgtime = mysecond() - avgtime;
         //std::cout << "Time to run: " << avgtime << "s" << std::endl;
-        **/
-    }
+       
+    }*/
 
 
-    return 0;
 }
 
 int main(void)
@@ -80,8 +87,9 @@ int main(void)
 float *d_a, *d_b, *d_c;
 int k;
 double times[1][NTIMES];
-int N = 100
+int N = 100;
 int bsize = 128;
+float scalar;
 
 /* Allocate memory on device */
 cudaMalloc((void**)&d_a, sizeof(float)*N);
@@ -100,15 +108,14 @@ cudaMalloc((void**)&d_c, sizeof(float)*N);
  set_array<<<dimGrid,dimBlock>>>(d_b, .5f, N);
  set_array<<<dimGrid,dimBlock>>>(d_c, .5f, N);
 
- STREAM_Copy<<<dimGrid,dimBlock>>>(d_a, d_c, N);
-   cudaThreadSynchronize();
 
-
+scalar = 3.0f;
 /* ---- Running NTIMES for average time ----*/
 for (k=0; k<NTIMES; k++)
 {
     times[0][k] = mysecond();
-    blas_ex();
+    blas_ex(scalar, N);
+    cudaThreadSynchronize();
     times[0][k] = mysecond() - times[0][k];
 }
 
