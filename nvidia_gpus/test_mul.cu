@@ -1,3 +1,14 @@
+// System includes
+#include <stdio.h>
+#include <assert.h>
+
+// CUDA runtime
+#include <cuda_runtime.h>
+
+// Helper functions and utilities to work with CUDA
+#include </home/yzamora/power/nvidia_gpus/gpu_analysis/common/inc/helper_functions.h>
+#include </home/yzamora/power/nvidia_gpus/gpu_analysis/common/inc/helper_cuda.h>
+
 template <int BLOCK_SIZE> __global__ void
 matrixMulCUDA(float *C, float *A, float *B, int wA, int wB)
 {
@@ -141,8 +152,9 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
     cudaFree(d_A);
     cudaFree(d_B);
     cudaFree(d_C);
-
-
+    
+    return EXIT_SUCCESS;
+}
 /**
  * Program main
  */
