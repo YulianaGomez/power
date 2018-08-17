@@ -123,6 +123,55 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
     unsigned int mem_size_C = dimsC.x * dimsC.y * sizeof(float);
     float *h_C = (float *) malloc(mem_size_C);
 
+   if (h_C == NULL)
+    {
+        fprintf(stderr, "Failed to allocate host matrix C!\n");
+        exit(EXIT_FAILURE);
+    }
+
+    cudaError_t error;
+
+    error = cudaMalloc((void **) &d_A, mem_size_A);
+
+    if (error != cudaSuccess)
+    {
+        printf("cudaMalloc d_A returned error %s (code %d), line(%d)\n", cudaGetErrorString(error), error, __LINE__);
+        exit(EXIT_FAILURE);
+    }
+
+    error = cudaMalloc((void **) &d_B, mem_size_B);
+
+    if (error != cudaSuccess)
+    {
+        printf("cudaMalloc d_B returned error %s (code %d), line(%d)\n", cudaGetErrorString(error), error, __LINE__);
+        exit(EXIT_FAILURE);
+    }
+
+    error = cudaMalloc((void **) &d_C, mem_size_C);
+
+    if (error != cudaSuccess)
+    {
+        printf("cudaMalloc d_C returned error %s (code %d), line(%d)\n", cudaGetErrorString(error), error, __LINE__);
+        exit(EXIT_FAILURE);
+    }
+
+    // copy host memory to device
+    error = cudaMemcpy(d_A, h_A, mem_size_A, cudaMemcpyHostToDevice);
+
+    if (error != cudaSuccess)
+    {
+        printf("cudaMemcpy (d_A,h_A) returned error %s (code %d), line(%d)\n", cudaGetErrorString(error), error, __LINE__);
+        exit(EXIT_FAILURE);
+    }
+
+    error = cudaMemcpy(d_B, h_B, mem_size_B, cudaMemcpyHostToDevice);
+
+    if (error != cudaSuccess)
+    {
+        printf("cudaMemcpy (d_B,h_B) returned error %s (code %d), line(%d)\n", cudaGetErrorString(error), error, __LINE__);
+        exit(EXIT_FAILURE);
+    }
+
     // Setup execution parameters
     dim3 threads(block_size, block_size);
     dim3 grid(dimsB.x / threads.x, dimsA.y / threads.y);
