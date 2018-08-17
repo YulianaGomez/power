@@ -38,12 +38,13 @@ for n_size in range(1000000,10000000,10000):
         print ("N size: {0:4d}, Block size: {1:4d}".format(n_size,block_size))
         #os.system("./stream_long.exe -B %i -N %i  stream_benchmark.results" % (block_size,n_size))
         #pargs = ["./stream_bigtime.exe","-B",str(block_size),"-N",str(n_size)]
-        pargs = ["./cooley.exe -B %s -N %s" % (str(block_size),str(n_size))]
+        #pargs = ["./cooley.exe -B %s -N %s" % (str(block_size),str(n_size))]
+        pargs = ["./stream_neddy.exe -B %s -N %s" % (str(block_size),str(n_size))]
         print (pargs)
         p = subprocess.Popen(pargs,stdout=combined_rate,stderr = combined_rate,shell=True)
         #p = subprocess.Popen("./stream_bigtime.exe -B %i -N %i  stream_all_benchmark.results" % (block_size,n_size))
         while p.poll() == None:
-            if loops%5 == 0:
+            if loops%500 == 0:
                 print("Obtaining stat results: Loop %i"% loops)
             loops += 1
             for i in range(0, deviceCount):
