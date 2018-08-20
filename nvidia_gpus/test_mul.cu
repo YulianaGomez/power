@@ -190,7 +190,7 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
         }
         else
         {
-            matrixMulCUDA<32><<< grid, threads >>>(d_C, d_A, d_B, dimsA.x, dimsB.x);
+            matrixMulCUDA<128><<< grid, threads >>>(d_C, d_A, d_B, dimsA.x, dimsB.x);
         }
     }
 
@@ -223,7 +223,7 @@ int main(int argc, char **argv)
     }
 
 
-    int block_size = 32;
+    int block_size = 128;
 
     dim3 dimsA(5*2*block_size, 5*2*block_size, 1);
     dim3 dimsB(5*4*block_size, 5*2*block_size, 1);
