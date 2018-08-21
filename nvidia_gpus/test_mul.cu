@@ -21,13 +21,13 @@ matrixMulCUDA(float *C, float *A, float *B, int wA, int wB)
     int ty = threadIdx.y;
 
     // Index of the first sub-matrix of A processed by the block
-    int aBegin = wA * BLOCK_SIZE * by;
+    int aBegin = wA * BLOCK_SIZE * by; //by or bx?
 
     // Index of the last sub-matrix of A processed by the block
     int aEnd   = aBegin + wA - 1;
 
     // Step size used to iterate through the sub-matrices of A
-    int aStep  = BLOCK_SIZE;
+    int aStep  = BLOCK_SIZE;//by*bx
 
     // Index of the first sub-matrix of B processed by the block
     int bBegin = BLOCK_SIZE * bx;
@@ -173,7 +173,8 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
     }
 
     // Setup execution parameters
-    dim3 threads(block_size, block_size);
+    //dim3 threads(block_size, block_size);
+    dim3 threads(32,16);
     dim3 grid(dimsB.x / threads.x, dimsA.y / threads.y);
 
     // Create and start timer
@@ -190,7 +191,7 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
         }
         else
         {
-            matrixMulCUDA<128><<< grid, threads >>>(d_C, d_A, d_B, dimsA.x, dimsB.x);
+            matrixMulCUDA<512><<< grid, threads >>>(d_C, d_A, d_B, dimsA.x, dimsB.x);
         }
     }
 
@@ -223,10 +224,12 @@ int main(int argc, char **argv)
     }
 
 
-    int block_size = 128;
+    int block_size = 32;
 
-    dim3 dimsA(5*2*block_size, 5*2*block_size, 1);
-    dim3 dimsB(5*4*block_size, 5*2*block_size, 1);
+    //dim3 dimsA(5*2*block_size, 5*2*block_size, 1);
+    //dim3 dimsB(5*4*block_size, 5*2*block_size, 1);
+    dim3 dimsA(512,512,1);
+    dim3 dimsB(512,512,1);
     // width of Matrix A
     if (checkCmdLineFlag(argc, (const char **)argv, "wA"))
     {
