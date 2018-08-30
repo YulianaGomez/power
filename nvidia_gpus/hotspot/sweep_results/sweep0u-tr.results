@@ -1,4 +1,4 @@
-==9294== NVPROF is profiling process 9294, command: ./hotspot 512 2 2 data/hotspot/temp_512 data/hotspot/power_512
+==9831== NVPROF is profiling process 9831, command: ./hotspot 512 2 2 data/hotspot/temp_512 data/hotspot/power_512
 WG size of kernel = 16 X 16
 pyramidHeight: 2
 gridSize: [512, 512]
@@ -7,16 +7,11 @@ blockGrid:[43, 43]
 targetBlock:[12, 12]
 Start computing the transient temperature
 Ending simulation
-==9294== Profiling application: ./hotspot 512 2 2 data/hotspot/temp_512 data/hotspot/power_512
-==9294== Profiling result:
-   Start  Duration            Grid Size      Block Size     Regs*    SSMem*    DSMem*      Size  Throughput  SrcMemType  DstMemType           Device   Context    Stream  Name
-2.07509s  90.431us                    -               -         -         -         -  1.0000MB  10.799GB/s    Pageable      Device  Tesla P100-PCIE         1         7  [CUDA memcpy HtoD]
-2.07566s  99.807us                    -               -         -         -         -  1.0000MB  9.7845GB/s    Pageable      Device  Tesla P100-PCIE         1         7  [CUDA memcpy HtoD]
-2.07577s  38.080us            (43 43 1)       (16 16 1)        38  3.0000KB        0B         -           -           -           -  Tesla P100-PCIE         1         7  calculate_temp(int, float*, float*, float*, int, int, int, int, float, float, float, float, float) [121]
-2.07582s  80.543us                    -               -         -         -         -  1.0000MB  12.125GB/s      Device    Pageable  Tesla P100-PCIE         1         7  [CUDA memcpy DtoH]
-
-Regs: Number of registers used per CUDA thread. This number includes registers used internally by the CUDA driver and/or tools and can be more than what the compiler shows.
-SSMem: Static shared memory allocated per CUDA block.
-DSMem: Dynamic shared memory allocated per CUDA block.
-SrcMemType: The type of source memory accessed by memory operation/copy
-DstMemType: The type of destination memory accessed by memory operation/copy
+==9831== Profiling application: ./hotspot 512 2 2 data/hotspot/temp_512 data/hotspot/power_512
+==9831== Profiling result:
+"Start","Duration","Grid X","Grid Y","Grid Z","Block X","Block Y","Block Z","Registers Per Thread","Static SMem","Dynamic SMem","Size","Throughput","SrcMemType","DstMemType","Device","Context","Stream","Name","Correlation_ID"
+s,us,,,,,,,,KB,B,MB,GB/s,,,,,,,
+2.008465,99.551000,,,,,,,,,,1.000000,9.809670,"Pageable","Device","Tesla P100-PCIE-16GB (0)","1","7","[CUDA memcpy HtoD]",104
+2.010075,89.535000,,,,,,,,,,1.000000,10.907048,"Pageable","Device","Tesla P100-PCIE-16GB (0)","1","7","[CUDA memcpy HtoD]",106
+2.010170,38.399000,43,43,1,16,16,1,38,3.000000,0,,,,,"Tesla P100-PCIE-16GB (0)","1","7","calculate_temp(int, float*, float*, float*, int, int, int, int, float, float, float, float, float)",121
+2.010210,80.288000,,,,,,,,,,1.000000,12.163244,"Device","Pageable","Tesla P100-PCIE-16GB (0)","1","7","[CUDA memcpy DtoH]",122
