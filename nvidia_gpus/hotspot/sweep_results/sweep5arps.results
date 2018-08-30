@@ -1,0 +1,24 @@
+==9307== NVPROF is profiling process 9307, command: ./hotspot 512 2 2 data/hotspot/temp_512 data/hotspot/power_512
+==9307== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==9307== Profiling application: ./hotspot 512 2 2 data/hotspot/temp_512 data/hotspot/power_512
+WG size of kernel = 16 X 16
+pyramidHeight: 2
+gridSize: [512, 512]
+border:[2, 2]
+blockGrid:[43, 43]
+targetBlock:[12, 12]
+Start computing the transient temperature
+Ending simulation
+==9307== Profiling result:
+==9307== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "Tesla P100-PCIE-16GB (0)"
+    Kernel: calculate_temp(int, float*, float*, float*, int, int, int, int, float, float, float, float, float)
+          1                            warps_launched       14792       14792       14792       14792
+          1                                local_load           0           0           0           0
+
+==9307== Metric result:
+Invocations                               Metric Name                        Metric Description         Min         Max         Avg
+Device "Tesla P100-PCIE-16GB (0)"
+    Kernel: calculate_temp(int, float*, float*, float*, int, int, int, int, float, float, float, float, float)
+          1                                       ipc                              Executed IPC    1.645568    1.645568    1.645568
