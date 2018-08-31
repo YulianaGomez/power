@@ -1,0 +1,32 @@
+==3818== NVPROF is profiling process 3818, command: ./maud_stream.exe -B 256 -N 100000
+==3818== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==3818==  STREAM Benchmark implementation in CUDA
+ Array size (single precision)=100000
+ using 256 threads per block, 391 blocks
+Function      Rate (MB/s)   Avg time
+Copy:      52.33882382   0.01528502
+Scale:     52.34692524   0.01528266
+Add:       78.47101077   0.01529227
+Triad:     78.46313951   0.01529381
+Profiling application: ./maud_stream.exe -B 256 -N 100000
+==3818== Profiling result:
+==3818== Event result:
+"Device","Kernel","Invocations","Event Name","Min","Max","Avg","Total"
+"Tesla P100-PCIE-16GB (0)","set_array(float*, float, int)",3,"warps_launched",3128,3128,3128,9384
+"Tesla P100-PCIE-16GB (0)","set_array(float*, float, int)",3,"local_load",0,0,0,0
+"Tesla P100-PCIE-16GB (0)","STREAM_Triad(float*, float*, float*, float, int)",1000,"warps_launched",3128,3128,3128,3128000
+"Tesla P100-PCIE-16GB (0)","STREAM_Triad(float*, float*, float*, float, int)",1000,"local_load",0,0,0,0
+"Tesla P100-PCIE-16GB (0)","STREAM_Scale(float*, float*, float, int)",1000,"warps_launched",3128,3128,3128,3128000
+"Tesla P100-PCIE-16GB (0)","STREAM_Scale(float*, float*, float, int)",1000,"local_load",0,0,0,0
+"Tesla P100-PCIE-16GB (0)","STREAM_Copy(float*, float*, int)",1000,"warps_launched",3128,3128,3128,3128000
+"Tesla P100-PCIE-16GB (0)","STREAM_Copy(float*, float*, int)",1000,"local_load",0,0,0,0
+"Tesla P100-PCIE-16GB (0)","STREAM_Add(float*, float*, float*, int)",1000,"warps_launched",3128,3128,3128,3128000
+"Tesla P100-PCIE-16GB (0)","STREAM_Add(float*, float*, float*, int)",1000,"local_load",0,0,0,0
+
+==3818== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla P100-PCIE-16GB (0)","set_array(float*, float, int)",3,"ipc","Executed IPC",0.924195,0.925563,0.924945
+"Tesla P100-PCIE-16GB (0)","STREAM_Triad(float*, float*, float*, float, int)",1000,"ipc","Executed IPC",0.701360,0.828021,0.819506
+"Tesla P100-PCIE-16GB (0)","STREAM_Scale(float*, float*, float, int)",1000,"ipc","Executed IPC",0.658014,0.843943,0.830516
+"Tesla P100-PCIE-16GB (0)","STREAM_Copy(float*, float*, int)",1000,"ipc","Executed IPC",0.616309,0.814833,0.806586
+"Tesla P100-PCIE-16GB (0)","STREAM_Add(float*, float*, float*, int)",1000,"ipc","Executed IPC",0.624290,0.826232,0.818444

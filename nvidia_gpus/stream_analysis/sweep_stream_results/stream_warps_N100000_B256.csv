@@ -1,0 +1,18 @@
+==3807== NVPROF is profiling process 3807, command: ./maud_stream.exe -B 256 -N 100000
+==3807==  STREAM Benchmark implementation in CUDA
+ Array size (single precision)=100000
+ using 256 threads per block, 391 blocks
+Function      Rate (MB/s)   Avg time
+Copy:      146.81642295   0.00544898
+Scale:     146.70228962   0.00545322
+Add:       219.69831489   0.00546204
+Triad:     219.69857407   0.00546203
+Profiling application: ./maud_stream.exe -B 256 -N 100000
+==3807== Profiling result:
+==3807== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla P100-PCIE-16GB (0)","set_array(float*, float, int)",3,"l2_write_throughput","L2 Throughput (Writes)",78.212345GB/s,115.382568GB/s,99.320790GB/s
+"Tesla P100-PCIE-16GB (0)","STREAM_Triad(float*, float*, float*, float, int)",1000,"l2_write_throughput","L2 Throughput (Writes)",36.646665GB/s,104.079392GB/s,102.498207GB/s
+"Tesla P100-PCIE-16GB (0)","STREAM_Scale(float*, float*, float, int)",1000,"l2_write_throughput","L2 Throughput (Writes)",30.832283GB/s,106.944783GB/s,104.769590GB/s
+"Tesla P100-PCIE-16GB (0)","STREAM_Copy(float*, float*, int)",1000,"l2_write_throughput","L2 Throughput (Writes)",39.773513GB/s,106.944783GB/s,105.307310GB/s
+"Tesla P100-PCIE-16GB (0)","STREAM_Add(float*, float*, float*, int)",1000,"l2_write_throughput","L2 Throughput (Writes)",36.878606GB/s,104.079392GB/s,102.253693GB/s

@@ -1,0 +1,18 @@
+==3750== NVPROF is profiling process 3750, command: ./maud_stream.exe -B 128 -N 100000
+==3750==  STREAM Benchmark implementation in CUDA
+ Array size (single precision)=100000
+ using 128 threads per block, 782 blocks
+Function      Rate (MB/s)   Avg time
+Copy:      53701.28252992   0.00001490
+Scale:     53193.38839996   0.00001504
+Add:       77389.20820046   0.00001551
+Triad:     77629.36553705   0.00001546
+Profiling application: ./maud_stream.exe -B 128 -N 100000
+==3750== Profiling result:
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,us,us,us,
+"GPU activities",25.351655,2.980250,1000,2.980000,2.912000,10.495000,"STREAM_Triad(float*, float*, float*, float, int)"
+"GPU activities",25.107882,2.951593,1000,2.951000,2.911000,3.840000,"STREAM_Add(float*, float*, float*, int)"
+"GPU activities",24.792706,2.914542,1000,2.914000,2.848000,10.752000,"STREAM_Scale(float*, float*, float, int)"
+"GPU activities",24.669361,2.900042,1000,2.900000,2.848000,9.856000,"STREAM_Copy(float*, float*, int)"
+"GPU activities",0.078396,0.009216,3,3.072000,2.656000,3.872000,"set_array(float*, float, int)"

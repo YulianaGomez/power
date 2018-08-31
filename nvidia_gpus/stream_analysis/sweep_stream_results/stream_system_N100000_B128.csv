@@ -1,0 +1,29 @@
+==3702== NVPROF is profiling process 3702, command: ./maud_stream.exe -B 128 -N 100000
+ STREAM Benchmark implementation in CUDA
+ Array size (single precision)=100000
+ using 128 threads per block, 782 blocks
+Function      Rate (MB/s)   Avg time
+Copy:      51705.01391001   0.00001547
+Scale:     51138.65591847   0.00001564
+Add:       74125.15494228   0.00001619
+Triad:     74324.57221918   0.00001615
+==3702== Profiling application: ./maud_stream.exe -B 128 -N 100000
+==3702== Profiling result:
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,us,us,us,
+"GPU activities",25.255698,2.969442,1000,2.969000,2.912000,10.112000,"STREAM_Triad(float*, float*, float*, float, int)"
+"GPU activities",25.112768,2.952637,1000,2.952000,2.912000,3.872000,"STREAM_Add(float*, float*, float*, int)"
+"GPU activities",24.805578,2.916519,1000,2.916000,2.879000,10.016000,"STREAM_Scale(float*, float*, float, int)"
+"GPU activities",24.749205,2.909891,1000,2.909000,2.848000,10.304000,"STREAM_Copy(float*, float*, int)"
+"GPU activities",0.076751,0.009024,3,3.008000,2.688000,3.648000,"set_array(float*, float, int)"
+"API calls",85.165715,336.432474,3,112144.158000,5.070000,336419.652000,"cudaMalloc"
+"API calls",8.047891,31.791807,4003,7.941000,7.214000,42.673000,"cudaLaunch"
+"API calls",5.759825,22.753195,4000,5.688000,3.346000,18.477000,"cudaThreadSynchronize"
+"API calls",0.503800,1.990176,16009,0.124000,0.102000,12.608000,"cudaSetupArgument"
+"API calls",0.343331,1.356270,4003,0.338000,0.209000,389.429000,"cudaConfigureCall"
+"API calls",0.083922,0.331520,94,3.526000,0.129000,144.815000,"cuDeviceGetAttribute"
+"API calls",0.053220,0.210237,1,210.237000,210.237000,210.237000,"cuDeviceTotalMem"
+"API calls",0.034384,0.135827,3,45.275000,5.728000,117.774000,"cudaFree"
+"API calls",0.006944,0.027432,1,27.432000,27.432000,27.432000,"cuDeviceGetName"
+"API calls",0.000554,0.002187,3,0.729000,0.183000,1.611000,"cuDeviceGetCount"
+"API calls",0.000414,0.001634,2,0.817000,0.213000,1.421000,"cuDeviceGet"
