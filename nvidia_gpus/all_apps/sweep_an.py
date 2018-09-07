@@ -5,9 +5,9 @@ import os
 import csv
 
 #Going through all metrics to check whether significant
-
+global combined_data_ = {}
 def all_metrics():
-    combined_data_ = {}
+    #combined_data_ = {}
 
     metric_targets = []
     all_sig_metrics = []
