@@ -4,9 +4,9 @@ import glob
 import os
 import csv
 
+# Used to create organized dictionary of STREAM metric data and timing results
 #Going through all metrics to check whether significant
-global combined_data_ = {}
-def all_metrics():
+def all_metrics(combined_data_):
     #combined_data_ = {}
 
     metric_targets = []
@@ -122,10 +122,12 @@ def all_metrics():
                         index_lookup[term] = idx
                         idx += 1
                     #print(index_lookup)
-    print(combined_data_)
+    return(combined_data_)
 
 
 def stream_time():
+    combined_data_ = {}
+    combined_data_ = all_metrics(combined_data_)
     #kernels - STREAM_Scale, STREAM_Triad, set_array, STREAM_Scale, STREAM_Copy, STREAM_Add
     executable = "stream"
     for file in glob.glob("/home/yzamora/power/nvidia_gpus/all_apps/stream_results/*.csv"):
@@ -149,8 +151,17 @@ def stream_time():
                                 combined_data_[key]["Time(s)"] = float((l.split(":")[1]).split()[1])
                             elif "Triad" in l and "Triad" in key:
                                 combined_data_[key]["Time(s)"] = float((l.split(":")[1]).split()[1])
-    print (combined_data_)
+        #file.close()
+    return (combined_data_)
+
+def all_st():
+    combined_data_ = {}
+    #global combined_data_={}
+    #all_metrics()
+    combined_data_ = stream_time()
+    return combined_data_
 
 if __name__=='__main__':
-    all_metrics()
+    #combined_data_ = {}
+    #all_metrics()
     stream_time()
