@@ -15,21 +15,15 @@ except OSError as e:
 
 for file in os.listdir("/home/yzamora/rodinia/data/kmeans/inputGen"):
     if file.endswith(".txt"):
-        print (file)
-    count = 0
-    if True:
-        stream_results = open(executable +"_results/" + executable + "_N" + str(n_size) + ".csv",'a')
+        size = file.split('_').[0]
+        count = 0
+        stream_results = open(executable +"_results/" + executable + "_N" + size + ".csv",'a')
         stream_results.flush()
-        
-        if (sys.argv[2] == "S"):
-            pargs=["nvprof --csv --metrics all ./%s -N %s" % (executable, str(n_size)) ]
-        elif (sys.argv[2] == "G"):
-            print("In Gaussian loop")
-            pargs = ["nvprof --csv --metrics all ./%s -f gaus_data/matrix%s.txt" % (executable, str(n_size)) ]
-        else:
-            print("In Gemm loop")
-            pargs = ["nvprof --csv --metrics all ./%s %s" % (executable, str(n_size)) ]
+
+        if (sys.argv[2] == "K"):
+            pargs=["nvprof --csv --metrics all ./%s -i %s" % (executable, file) ]
+
         print(pargs)
         count += 1
         p = subprocess.run(pargs,stdout=stream_results,stderr=stream_results, shell=True)
-        time.sleep(1)"""
+        time.sleep(1)
