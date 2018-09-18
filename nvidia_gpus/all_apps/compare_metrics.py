@@ -11,8 +11,8 @@ def single_run():
     metric_targets = []
     all_sig_metrics = []
     bench_targets = [ "gaussian" ,"gemm", "stream" ]
-    for filen_ in glob.glob("/home/yzamora/power/nvidia_gpus/all_apps/single_run_results/b*.csv"):
-    #for filen_ in glob.glob("/home/yzamora/power/nvidia_gpus/all_apps/gaussian_results/*.csv"):
+    #for filen_ in glob.glob("/home/yzamora/power/nvidia_gpus/all_apps/single_run_results/*.csv"):
+    for filen_ in glob.glob("/home/yzamora/power/nvidia_gpus/all_apps/stream_gemm_results/*.csv"):
         filen = os.path.basename(filen_)
         #print (filen)
         filen_split = filen.split('.')[0].split('_')
@@ -122,20 +122,21 @@ def single_run():
                         idx += 1
     return combined_data_
 
-def compare_metrics(dict1,dict2):
+def compare_metrics(dict1,dict2,x):
     compared ={}
     #dict1 = combined_data_['hotspot_calculate_temp']
     #dict2 = combined_data_['huffman_vlc_encode_kernel_sm64huff']
     if x:
         diffkeys = [k for k in dict1 if dict1[k] != dict2[k]]
     else:
+        #False - if values of same metric  are the same
         diffkeys = [k for k in dict1 if dict1[k] == dict2[k]]
     for k in diffkeys:
         compared[k] =  dict1[k], dict2[k],abs(dict1[k]-dict2[k])
 
     return (compared)
 
-def compare_all(large_dict):
+def compare_all(large_dict,x):
     dif = {}
     for k,v in large_dict.items():
         for k2,v2 in large_dict.items():
@@ -145,34 +146,56 @@ def compare_all(large_dict):
     return(dif)
 
 #acquiring list of metrics that have the highest differences in value
-def top_metrics(input_dic):
+def top_metrics(input_dic,threshold,x):
     #use top_values only if values only are needed
     #top_values = []
     top_dic = []
     for k,v in input_dic.items():
         for k2,v2 in v.items():
-            if (v2[-1]) > 391601:
-                #print (k2, v2, k)
-                if min(top_values) < v2[-1]:
-                    if len(top_values) == 10:
-                        #top_values.remove(min(top_values))
-                        #top_dic.remove(min(top_dic))
-                    #top_values.append(v2[-1])
-                top_dic.append((k,k2,v2[-1]))
+            if x:
+                if (v2[-1]) > threshold:
+                    #print (k2, v2, k)
+                    #if min(top_values) < v2[-1]:
+                        #if len(top_values) == 10:
+                            #top_values.remove(min(top_values))
+                            #top_dic.remove(min(top_dic))
+                        #top_values.append(v2[-1])
+                    top_dic.append((k,v2[0],k2,v2[1],v2[-1]))
+            else:
+                if (v2[-1]) <= threshold:
+                    top_dic.append((k,v2[0],k2,v2[1],v2[-1]))
+            
     #print(sorted(top_values))
     #print(top_dic)
-    list_sorted = (sorted(top_dic, key=lambda tup:tup[2],reverse=True))
+    if x:
+        list_sorted = (sorted(top_dic, key=lambda tup:tup[4],reverse=True))
+    else:
+        list_sorted = (sorted(top_dic, key=lambda tup:tup[4]))
+
     return (list_sorted)
 
-def metric_analysis(dict):
-    top10 = list_sorted[:30]
+def metric_analysis(list_sorted,size):
+    top10 = list_sorted[:size]
     for c in top10:
-        print(c[0].split('.')[0])
+        print("First Kernel: %s, Metric: %s, Metric Value Dif: %5.5f, Metric Value: %5.5f" % (c[0].split('.')[0],c[2],c[4], c[1]))
+        print("Second Kernel: %s, Metric: %s, Metric Value Dif: %5.5f, Metric Value: %5.5f" % (c[0].split('.')[1],c[2], c[4],c[3]))
+        print("\n")
 
-def main():
+def main(size):
     combined_apps = single_run()
     diff_values = compare_all(combined_apps,True)
     same_values = compare_all(combined_apps,False)
     sorted_list = top_metrics(diff_values)
-    metric_analysis[sorted_list]
+    metric_analysis(sorted_list,size)
     #return compared_metrics_dic
+def sort_all(x,threshold):
+    combined_apps = single_run()
+    if x:
+        values = compare_all(combined_apps,True)
+    else:
+        values = compare_all(combined_apps,True)
+    #print(values)
+    sorted_list = top_metrics(values,threshold,x)
+    #metric_analysis(sorted_list,size)
+    return sorted_list
+#print(sort_all(False,20))
