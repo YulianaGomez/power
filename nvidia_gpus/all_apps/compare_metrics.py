@@ -11,7 +11,7 @@ def single_run():
     metric_targets = []
     all_sig_metrics = []
     bench_targets = [ "gaussian" ,"gemm", "stream" ]
-    for filen_ in glob.glob("/home/yzamora/power/nvidia_gpus/all_apps/single_run_results/*.csv"):
+    for filen_ in glob.glob("/home/yzamora/power/nvidia_gpus/all_apps/single_run_results/b*.csv"):
     #for filen_ in glob.glob("/home/yzamora/power/nvidia_gpus/all_apps/gaussian_results/*.csv"):
         filen = os.path.basename(filen_)
         #print (filen)
@@ -140,6 +140,8 @@ def compare_all(large_dict):
             dict_compared = str(k) + "." + str(k2)
             dif[dict_compared] = compare_metrics(large_dict[k],large_dict[k2])
     return(dif)
+
+
 
 def main():
     combined_apps = single_run()
