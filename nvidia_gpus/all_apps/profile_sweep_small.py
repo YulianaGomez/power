@@ -6,14 +6,7 @@ import subprocess
 import time
 import sys
 
-#options = ["--print-gpu-trace", "--system-profiling on --print-gpu-trace","--metrics flop_count_dp_fma","--metrics l2_write_throughput","--print-gpu-trace","--events warps_launched,local_load --metrics ipc","--print-gpu-summary"]
-#options = ["", "--system-profiling on --print-gpu-trace","--metrics l2_write_throughput","--events warps_launched,local_load --metrics ipc","--print-gpu-summary"]
-#options = ["--metrics inst_executed","--metrics ipc","--metrics sysmem_read_throughput","--metrics sysmem_write_throughput","--metrics l2_l1_read_hit_rate" ,"--metrics l1_cache_local_hit_rate", "--metrics l1_cache_global_hit_rate"]
-blocks = [128, 256, 512, 1024]
 executable = sys.argv[1]
-#blocks = [128]#, 256, 512, 1024]
-#name = ["system","l2_through","warps","ipc","sum"]#,"flop","l2_through","trace","warps","load","summary"]
-#name = ["inst","ipc","read","write", "l2hit", "l1hit","globall1"]
 try:
     os.makedirs(executable + "_results")
 except OSError as e:
@@ -22,14 +15,15 @@ except OSError as e:
 
 
 #for n_size in range(128,4096*4,128):
-#Stream range
-for n_size in range(128,1048576,128):
+for n_size in range(32,16384,32):
     #for block_size in blocks:
     count = 0
-    if True:
+    print(os.path.isfile(executable +"_results/" + executable + "_N" + str(n_size) + ".csv"))
+    if not os.path.isfile(executable +"_results/" + executable + "_N" + str(n_size) + ".csv"):
+        print(executable +"_results/" + executable + "_N" + str(n_size) + ".csv")
+        
         stream_results = open(executable +"_results/" + executable + "_N" + str(n_size) + ".csv",'a')
         stream_results.flush()
-        
         if (sys.argv[2] == "S"):
             pargs=["nvprof --csv --metrics all ./%s -N %s" % (executable, str(n_size)) ]
         elif (sys.argv[2] == "G"):
