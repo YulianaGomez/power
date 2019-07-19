@@ -17,7 +17,7 @@ except OSError as e:
 
 
 #for n_size in range(128,4096*4,128):
-for n_size in range(64,16384,32):
+for n_size in range(1168,16384,16):
 #for n_size in range(64,128,32):
     #for block_size in blocks:
     count = 0
