@@ -24,11 +24,11 @@ except OSError as e:
 
 #for n_size in range(128,4096*4,128):
 #Stream range
-for n_size in range(128,1048576,128):
+for n_size in range(10000000,100000000,128):
     #for block_size in blocks:
     count = 0
     #if True:
-    if not os.path.isfile(executable +"_results/" + executable + "_N" + str(n_size) + ".csv")
+    if not os.path.isfile(path + executable +"_results/" + executable + "_N" + str(n_size) + ".csv"):
         stream_results = open(path + executable +"_results/" + executable + "_N" + str(n_size) + ".csv",'a')
         stream_results.flush()
         
