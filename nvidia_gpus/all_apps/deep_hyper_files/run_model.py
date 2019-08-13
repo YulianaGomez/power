@@ -213,7 +213,7 @@ from keras.callbacks import ModelCheckpoint
 all_data = False
 p100_p100 = False
 p100_v100 = True
-def testing_training_size(regularization,k_init = 'glorot_uniform', lr = .001,EPOCHS = 9000, BATCH_SIZE = 50):
+def testing_training_size(activation, depth,nunits,regularization,k_init = 'glorot_uniform', lr = .001,EPOCHS = 9000, BATCH_SIZE = 50):
     #training size decreases
     if all_data:
         new_p = pd.read_csv('cor_p100.csv', index_col = 0)
@@ -254,10 +254,13 @@ def run(param_dict):
     val_testsize = {}
     new_exp = -7.444444444444445
     mult = 2.8684210526315788
-    val_testsize[2.86]= testing_training_size(mult*10**new_exp,lr=0.0001,EPOCHS=EPOCHS,BATCH_SIZE=BATCH_SIZE)
+    val_testsize[2.86]= testing_training_size(param_dict['activation'], param_dict['depth'],param_dict['nunits'],mult*10**new_exp,lr=0.0001,EPOCHS=EPOCHS,BATCH_SIZE=BATCH_SIZE)
     print("lowest val loss", val_testsize[2.86])
 if __name__=='__main__':
-    param_dict={}
-    param_dict['batch_size'] = 100
-    param_dict['epochs'] = 500
+    from problem1 import Problem
+    param_dict = Problem.starting_point_asdict
+    param_dict['epochs'] = 10
+    """param_dict={}
+    param_dict['batch_size'] = 50
+    param_dict['epochs'] = 500"""
     run(param_dict)
