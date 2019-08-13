@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #Step 1
 import os
 import time
@@ -5,10 +6,10 @@ import json
 import pickle
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.mlab as mlab
+#import matplotlib.pyplot as plt
+#import matplotlib.mlab as mlab
 from scipy import stats
-from pylab import rcParams
+#from pylab import rcParams
 from sklearn.utils import check_random_state
 from sklearn.datasets import load_digits
 from sklearn.datasets import fetch_mldata
@@ -16,7 +17,7 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import scale
 #from sklearn.preprocessing import MinMaxScaler
 from sklearn.cluster import KMeans
-from sklearn.mixture import GaussianMixture
+#from sklearn.mixture import GaussianMixture
 from sklearn.svm import LinearSVC, SVC
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LogisticRegression
@@ -25,7 +26,7 @@ from sklearn.metrics import pairwise_distances_argmin_min
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_recall_curve
 from sklearn.metrics import average_precision_score
-from sklearn.model_selection import cross_val_score
+#from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor, \
     GradientBoostingRegressor
@@ -33,13 +34,13 @@ from sklearn.metrics import mean_squared_error
 
 # Importing random forest model and libraries
 from sklearn.model_selection import train_test_split, GridSearchCV, ShuffleSplit
-from sklearn.model_selection import cross_val_score
+#from sklearn.model_selection import cross_val_score
 import numpy
 import pandas
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.wrappers.scikit_learn import KerasRegressor
-from sklearn.model_selection import cross_val_score
+#from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import KFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
@@ -171,10 +172,10 @@ def my_model(l2_weight,k_init = 'glorot_uniform',lr_num=.001):
     return model
 
 #loading memory bound metrics
-XV_val = np.load('/Users/yzamora/power/nvidia_gpus/all_apps/X_predicted_test_v100.npy')
-XP_val = np.load('/Users/yzamora/power/nvidia_gpus/all_apps/X_predicted_test_p100.npy')
+XV_val = np.load('../X_predicted_test_v100.npy')
+XP_val = np.load('../X_predicted_test_p100.npy')
 
-new_p = pd.read_csv('/Users/yzamora/power/nvidia_gpus/all_apps/train_predicted_true_p100.csv')
+new_p = pd.read_csv('../train_predicted_true_p100.csv')
 
 def get_w_vec(df, weights, indices=None):
     w = []
@@ -220,8 +221,8 @@ def testing_training_size(regularization,k_init = 'glorot_uniform', lr = .001,EP
     else:
         ##new_p = pd.read_csv('/Users/yzamora/Desktop/ActiveLearningFrameworkTutorial/with_same_base_P100/AM_AL_spec_P100_20per.csv', index_col = 0) #using specified kernels
         ##new_v = pd.read_csv('/Users/yzamora/Desktop/ActiveLearningFrameworkTutorial/with_same_base_P100/AM_AL_spec_V100_20per.csv', index_col = 0)
-        new_p = pd.read_csv('/Users/yzamora/power/nvidia_gpus/all_apps/train_predicted_true_p100.csv') #using specified kernels
-        new_v = pd.read_csv('/Users/yzamora/power/nvidia_gpus/all_apps/train_predicted_true_v100.csv')
+        new_p = pd.read_csv('../train_predicted_true_p100.csv') #using specified kernels
+        new_v = pd.read_csv('../train_predicted_true_v100.csv')
 
         #X_trainP, X_testP, y_trainP, y_testP, X_P, Y_P = process(new_p,test_size)
         #X_trainV, X_testV, y_trainV, y_testV, X_V, Y_V = process(new_v,test_size)
@@ -235,11 +236,11 @@ def testing_training_size(regularization,k_init = 'glorot_uniform', lr = .001,EP
         #pass in validation data - remove validation split, do not split training set again
         #history = h_model.fit(X_trainP, X_trainV, epochs=100, batch_size=500,  verbose=1, validation_split=0.2)
         earlystop = EarlyStopping(monitor='val_loss', min_delta=0, patience=100, verbose=1, mode='min')
-        mc = ModelCheckpoint('adam_step-noappweight_membounds2_dram_kmeans_zerobias.h5', monitor='val_loss', mode='min', verbose=1,save_best_only=True)
+        ###mc = ModelCheckpoint('adam_step-noappweight_membounds2_dram_kmeans_zerobias.h5', monitor='val_loss', mode='min', verbose=1,save_best_only=True)
         #h_model.save('wsame_PV_dl_10per_woutbias' + str(int(regularization)) +'.h5')
         #create a separate vector with a weight for the applications - put this vector into sample weight, after callbacks
         #sample_weight = just do regular train, test, split
-        history = h_model.fit(X_trainP, X_trainV, epochs=EPOCHS, batch_size=BATCH_SIZE,  verbose=1, validation_data=(XP_val,XV_val),callbacks=[earlystop,mc],sample_weight=np.array(train_weights))
+        history = h_model.fit(X_trainP, X_trainV, epochs=EPOCHS, batch_size=BATCH_SIZE,  verbose=1, validation_data=(XP_val,XV_val),callbacks=[earlystop,],sample_weight=np.array(train_weights))
         #h_model.save('wAsame_PV_dl_10per_woutbias' + str(int(regularization)) +'.h5')
         lowest_val = np.min(history.history['val_loss'])
         return lowest_val
