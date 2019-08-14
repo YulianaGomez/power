@@ -1,3 +1,9 @@
+
+# some_file.py
+import sys
+# insert at 1, 0 is the script path (or '' in REPL)
+sys.path.insert(1, '/home/yzamora/perf_pred/deephyper_repo/deephyper/')
+
 from deephyper.benchmark import HpProblem
 
 Problem = HpProblem()

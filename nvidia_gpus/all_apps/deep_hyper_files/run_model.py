@@ -1,5 +1,7 @@
 #!/usr/bin/env python
+print("in imports")
 #Step 1
+import sys
 import os
 import time
 import json
@@ -55,9 +57,27 @@ import pickle as pkl
 
 
 from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import MinMaxScaler
+#from sklearn.preprocessing import MinMaxScaler
 # Creates array of ipc values and array of metrics
+
+import tensorflow as tf
+# try interop values of 0, 1, 2
+session_conf = tf.ConfigProto(intra_op_parallelism_threads=62, inter_op_parallelism_threads=0,
+allow_soft_placement = True)
+#from tensorflow import keras
+#from tensorflow.keras import backend as K
+#sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
+#K.set_session(sess)
+here = os.path.dirname(os.path.abspath(__file__))
+top = os.path.dirname(os.path.dirname(os.path.dirname(here)))
+sys.path.append(top)
+BNAME = os.path.splitext(os.path.basename(__file__))[0]
+print(top)
+sys.path.insert(0, '/home/yzamora/perf_pred/deephyper_repo/deephyper/deephyper/')
+
+
 def process_keep(new_df):
+    print("in process keep")
     #new_def_norm = new_df.drop(columns=['shared_utilization','stall_other','single_precision_fu_utilization','architecture','input','ipc','application_name','kernelname'])
     new_def_norm = new_df.drop(columns=['architecture','input','application_name','kernelname'])
 
@@ -113,7 +133,12 @@ loss_weight[105] = 0#13
 loss_weight[106] = 0#10
 #print(loss_weight)
 
-
+#defining r2
+def r2(y_true, y_pred):
+    SS_res = K.sum(K.square(y_true - y_pred))
+    SS_tot = K.sum(K.square(
+        y_true - K.mean(y_true)))
+    return (1 - SS_res/(SS_tot + K.epsilon()))
 #creating
 
 # fix random seed for reproducibility
@@ -124,7 +149,8 @@ numpy.random.seed(7)
 #X = dataset[:,0:8]
 #Y = dataset[:,8]
 # create model
-def my_model(l2_weight,k_init = 'glorot_uniform',lr_num=.001):
+def my_model(activation,nunits, l2_weight,k_init = 'glorot_uniform',lr_num=.001):
+    print("in my model")
     model = Sequential()
     """
     #original simple dl model
@@ -135,24 +161,24 @@ def my_model(l2_weight,k_init = 'glorot_uniform',lr_num=.001):
     model.add(Dense(1, activation='relu'))"""
     #early stopping, smaller layers, less layers
 
-    model.add(Dense(130, input_dim=116, kernel_initializer=k_init,activation='relu', kernel_regularizer=regularizers.l2(l2_weight)))
-    model.add(Dense(125, activation='relu',kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
-    model.add(Dense(125, activation='relu',kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
-    model.add(Dense(120, activation='relu',kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
-    model.add(Dense(120, activation='relu',kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
-    model.add(Dense(120, activation='relu',kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
-    model.add(Dense(120, activation='relu',kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
-    model.add(Dense(120, activation='relu',kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
-    model.add(Dense(120, activation='relu',kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
-    model.add(Dense(125, activation='relu',kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
-    model.add(Dense(125, activation='relu',kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
-    model.add(Dense(125, activation='relu',kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
-    #model.add(Dense(90, activation='relu'))
-    #model.add(Dense(100, activation='relu'))
-    #model.add(Dense(110, activation='relu'))
+    model.add(Dense(130, input_dim=116, kernel_initializer=k_init,activation=activation, kernel_regularizer=regularizers.l2(l2_weight)))
+    model.add(Dense(nunits, activation=activation,kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
+    model.add(Dense(nunits, activation=activation,kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
+    model.add(Dense(nunits, activation=activation,kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
+    model.add(Dense(nunits, activation=activation,kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
+    model.add(Dense(nunits, activation=activation,kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
+    model.add(Dense(nunits, activation=activation,kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
+    model.add(Dense(nunits, activation=activation,kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
+    model.add(Dense(nunits, activation=activation,kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
+    model.add(Dense(nunits, activation=activation,kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
+    model.add(Dense(nunits, activation=activation,kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
+    model.add(Dense(nunits, activation=activation,kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight)))
+    #model.add(Dense(90, activation=activation))
+    #model.add(Dense(100, activation=activation))
+    #model.add(Dense(110, activation=activation))
     #rerun and check everything is normalized correctly
-    model.add(Dense(125, activation='relu',kernel_initializer=k_init, kernel_regularizer=regularizers.l2(l2_weight)))
-    ##model.add(Dense(116, activation='relu')) #, kernel_regularizer=regularizers.l2(l2_weight)))
+    model.add(Dense(nunits, activation=activation,kernel_initializer=k_init, kernel_regularizer=regularizers.l2(l2_weight)))
+    ##model.add(Dense(116, activation=activation)) #, kernel_regularizer=regularizers.l2(l2_weight)))
     model.add(Dense(116, kernel_initializer=k_init,kernel_regularizer=regularizers.l2(l2_weight),activation= None))
     # Compile model
     #mean absolute percentage error - indicating that we seek to minimize the mean percentage difference between
@@ -161,7 +187,7 @@ def my_model(l2_weight,k_init = 'glorot_uniform',lr_num=.001):
     #model.compile(loss='mse', optimizer='adam', metrics=['mse','mae'])
     #changing step size - halfing the step size
     adam_step = optimizers.Adam(lr=lr_num)
-    model.compile(loss=weighted_mse(loss_weight), optimizer=adam_step, metrics=['mse','mae'])
+    model.compile(loss=weighted_mse(loss_weight), optimizer=adam_step, metrics=['mse','mae',r2])
     # Fit the model
     ## model.fit(X, Y, epochs=10, batch_size=10) ##works
     #look at weighted mean square error - putting more weight on certain metrics
@@ -178,6 +204,7 @@ XP_val = np.load('../X_predicted_test_p100.npy')
 new_p = pd.read_csv('../train_predicted_true_p100.csv')
 
 def get_w_vec(df, weights, indices=None):
+    print("in get_w_vec")
     w = []
     indices = indices or [i for i in range(len(df))]
     for ind in indices:
@@ -213,8 +240,9 @@ from keras.callbacks import ModelCheckpoint
 all_data = False
 p100_p100 = False
 p100_v100 = True
-def testing_training_size(activation, depth,nunits,regularization,k_init = 'glorot_uniform', lr = .001,EPOCHS = 9000, BATCH_SIZE = 50):
+def testing_training_size(activation='relu', depth=8,nunits=16,regularization=None,k_init = 'glorot_uniform', lr = .001,EPOCHS = 9000, BATCH_SIZE = 50):
     #training size decreases
+    print("testing training size")
     if all_data:
         new_p = pd.read_csv('cor_p100.csv', index_col = 0)
         new_v = pd.read_csv('cor_v100.csv', index_col = 0)
@@ -232,7 +260,7 @@ def testing_training_size(activation, depth,nunits,regularization,k_init = 'glor
         X_trainV = process_keep(new_v)
 
 
-        h_model = my_model(regularization,k_init,lr)
+        h_model = my_model(activation,nunits,regularization,k_init,lr)
         #pass in validation data - remove validation split, do not split training set again
         #history = h_model.fit(X_trainP, X_trainV, epochs=100, batch_size=500,  verbose=1, validation_split=0.2)
         earlystop = EarlyStopping(monitor='val_loss', min_delta=0, patience=100, verbose=1, mode='min')
@@ -242,24 +270,30 @@ def testing_training_size(activation, depth,nunits,regularization,k_init = 'glor
         #sample_weight = just do regular train, test, split
         history = h_model.fit(X_trainP, X_trainV, epochs=EPOCHS, batch_size=BATCH_SIZE,  verbose=1, validation_data=(XP_val,XV_val),callbacks=[earlystop,],sample_weight=np.array(train_weights))
         #h_model.save('wAsame_PV_dl_10per_woutbias' + str(int(regularization)) +'.h5')
-        lowest_val = np.min(history.history['val_loss'])
-        return lowest_val
+        return history.history
 
 
 
 #Going through 10 different training set sizes and saving results to val_testsize
 def run(param_dict):
-    BATCH_SIZE = param_dict['batch_size']
-    EPOCHS = param_dict['epochs']
+    print("in run")
+    BS = 50
+    EPS = 10
     val_testsize = {}
     new_exp = -7.444444444444445
     mult = 2.8684210526315788
-    val_testsize[2.86]= testing_training_size(param_dict['activation'], param_dict['depth'],param_dict['nunits'],mult*10**new_exp,lr=0.0001,EPOCHS=EPOCHS,BATCH_SIZE=BATCH_SIZE)
-    print("lowest val loss", val_testsize[2.86])
+    opt_history = testing_training_size(param_dict['activation'], param_dict['depth'],param_dict['nunits'],mult*10**new_exp,lr=0.0001,EPOCHS=EPS,BATCH_SIZE=BS)
+    print("lowest val loss", opt_history['val_loss'])
+    print("r2", opt_history['r2'])
+    return opt_history['r2']
+
 if __name__=='__main__':
+    print("in main")
     from problem1 import Problem
-    param_dict = Problem.starting_point_asdict
-    param_dict['epochs'] = 10
+    print("past import")
+    param_dict = Problem.starting_point_asdict[0]
+    print("past calling problem")
+    #param_dict['epochs'] = (10)
     """param_dict={}
     param_dict['batch_size'] = 50
     param_dict['epochs'] = 500"""
