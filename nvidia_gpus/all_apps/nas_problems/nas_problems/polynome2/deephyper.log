@@ -1,0 +1,321 @@
+2019-08-14 12:14:37|4902|INFO|deephyper:50] 
+
+Loading Deephyper
+--------------
+2019-08-14 12:14:39|4902|INFO|deephyper.search.search:49] Evaluator will execute the function: deephyper.search.nas.model.run.alpha.run
+2019-08-14 12:14:39|4902|INFO|deephyper.evaluator._subprocess:98] Subprocess Evaluator will execute run() from module deephyper.search.nas.model.run.alpha
+2019-08-14 12:14:39|4902|INFO|deephyper.search.search:57] Options: {   'backend': 'tensorflow',
+    'cache_key': <function key at 0x106da2598>,
+    'eval_timeout_minutes': 4096,
+    'evaluator': 'subprocess',
+    'max_evals': 10000000000.0,
+    'problem': 'nas_problems.polynome2.problem.Problem',
+    'redis_address': None,
+    'run': 'deephyper.search.nas.model.run.alpha.run',
+    'seed': None}
+2019-08-14 12:14:39|4902|INFO|deephyper.search.search:59] Hyperparameter space definition: OrderedDict([   (   'create_structure',
+                    {   'func': <function create_search_space at 0x12e30f1e0>,
+                        'kwargs': {'num_layers': 10}}),
+                (   'hyperparameters',
+                    {   'batch_size': 100,
+                        'callbacks': {   'EarlyStopping': {   'mode': 'max',
+                                                              'monitor': 'val_r2',
+                                                              'patience': 5,
+                                                              'verbose': 0}},
+                        'learning_rate': 0.001,
+                        'num_epochs': 1,
+                        'optimizer': 'adam',
+                        'verbose': 0}),
+                (   'load_data',
+                    {   'func': <function load_data at 0x11bb1f510>,
+                        'kwargs': {}}),
+                ('loss', 'mse'),
+                ('metrics', ['r2']),
+                ('objective', 'val_r2__last'),
+                (   'post_train',
+                    {   'callbacks': {   'EarlyStopping': {   'mode': 'max',
+                                                              'monitor': 'val_r2',
+                                                              'patience': 50,
+                                                              'verbose': 1},
+                                         'ModelCheckpoint': {   'mode': 'max',
+                                                                'monitor': 'val_r2',
+                                                                'save_best_only': True,
+                                                                'verbose': 1},
+                                         'TensorBoard': {   'log_dir': '1565802879.512017'}},
+                        'metrics': ['r2'],
+                        'num_epochs': 1000}),
+                (   'preprocessing',
+                    {'func': <function minmaxstdscaler at 0x11a713620>}),
+                ('seed', None)])
+2019-08-14 12:14:39|4902|INFO|deephyper.search.search:60] Created subprocess evaluator
+2019-08-14 12:14:39|4902|INFO|deephyper.search.search:61] Evaluator: num_workers is 1
+2019-08-14 12:14:39|4902|INFO|deephyper.search.nas.regevo:47] >>> {"type": "start_infos", "alg": "aging-evolution", "nworkers": 1, "encoded_space": "{\"create_structure\": {\"func\": \"nas_problems.polynome2.architecture.create_search_space\", \"kwargs\": {\"num_layers\": 10}}, \"hyperparameters\": {\"verbose\": 0, \"batch_size\": 100, \"learning_rate\": 0.001, \"optimizer\": \"adam\", \"num_epochs\": 1, \"callbacks\": {\"EarlyStopping\": {\"monitor\": \"val_r2\", \"mode\": \"max\", \"verbose\": 0, \"patience\": 5}}}, \"load_data\": {\"func\": \"nas_problems.polynome2.load_data.load_data\", \"kwargs\": {}}, \"loss\": \"mse\", \"metrics\": [\"r2\"], \"objective\": \"val_r2__last\", \"post_train\": {\"num_epochs\": 1000, \"metrics\": [\"r2\"], \"callbacks\": {\"ModelCheckpoint\": {\"monitor\": \"val_r2\", \"mode\": \"max\", \"save_best_only\": true, \"verbose\": 1}, \"EarlyStopping\": {\"monitor\": \"val_r2\", \"mode\": \"max\", \"verbose\": 1, \"patience\": 50}, \"TensorBoard\": {\"log_dir\": \"1565802879.512017\"}}}, \"preprocessing\": {\"func\": \"deephyper.search.nas.model.preprocessing.minmaxstdscaler\"}, \"seed\": null}"}
+2019-08-14 12:14:39|4902|INFO|deephyper.evaluator.evaluate:151] Submitted new eval of OrderedDict([('create_structure', {'func': <function create_search_space at 0x12e30f1e0>, 'kwargs': {'num_layers': 10}}), ('hyperparameters', {'verbose': 0, 'batch_size': 100, 'learning_rate': 0.001, 'optimizer': 'adam', 'num_epochs': 1, 'callbacks': {'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 0, 'patience': 5}}}), ('load_data', {'func': <function load_data at 0x11bb1f510>, 'kwargs': {}}), ('loss', 'mse'), ('metrics', ['r2']), ('objective', 'val_r2__last'), ('post_train', {'num_epochs': 1000, 'metrics': ['r2'], 'callbacks': {'ModelCheckpoint': {'monitor': 'val_r2', 'mode': 'max', 'save_best_only': True, 'verbose': 1}, 'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 1, 'patience': 50}, 'TensorBoard': {'log_dir': '1565802879.512017'}}}), ('preprocessing', {'func': <function minmaxstdscaler at 0x11a713620>}), ('seed', None), ('arch_seq', [3, 0, 7, 0, 0, 20, 0, 0, 0, 10, 1, 0, 0, 8, 0, 0, 1, 10, 1, 1, 1, 10, 0, 1, 0, 16, 0, 0, 1, 14, 1, 1, 1, 7, 0, 0, 1])])
+2019-08-14 12:14:41|4906|INFO|deephyper:50] 
+
+Loading Deephyper
+--------------
+2019-08-14 12:14:42|4906|INFO|deephyper.search.nas.run:28] Data loaded with kwargs: {}
+2019-08-14 12:14:42|4906|INFO|deephyper.search.nas.run:65] input_shape: (116,)
+2019-08-14 12:14:42|4906|INFO|deephyper.search.nas.run:66] output_shape: (116,)
+2019-08-14 12:14:42|4906|INFO|deephyper.search.nas.run:81] actions list: [3, 0, 7, 0, 0, 20, 0, 0, 0, 10, 1, 0, 0, 8, 0, 0, 1, 10, 1, 1, 1, 10, 0, 1, 0, 16, 0, 0, 1, 14, 1, 1, 1, 7, 0, 0, 1]
+2019-08-14 12:14:42|4906|DEBUG|deephyper.model.trainer:78] load_data
+2019-08-14 12:14:42|4906|DEBUG|deephyper.model.trainer:81] data config type: ndarray
+2019-08-14 12:14:42|4906|DEBUG|deephyper.model.trainer:136] TrainerTrainValid: 1 inputs
+2019-08-14 12:14:42|4906|DEBUG|deephyper.model.trainer:158] preprocess_data with: <function minmaxstdscaler at 0x13057f400>
+2019-08-14 12:14:43|4906|DEBUG|deephyper.model.trainer:71] [PARAM] KerasTrainer instantiated
+2019-08-14 12:14:43|4906|INFO|deephyper.model.trainer:306] Trainer is computing metrics on validation after each training epoch.
+2019-08-14 12:14:51|4902|INFO|deephyper.evaluator.evaluate:245] New eval finished: {"arch_seq": [3, 0, 7, 0, 0, 20, 0, 0, 0, 10, 1, 0, 0, 8, 0, 0, 1, 10, 1, 1, 1, 10, 0, 1, 0, 16, 0, 0, 1, 14, 1, 1, 1, 7, 0, 0, 1]} --> 0.75563425
+2019-08-14 12:14:51|4902|INFO|deephyper.evaluator.evaluate:256] Requested eval x: {'create_structure': {'func': 'nas_problems.polynome2.architecture.create_search_space', 'kwargs': {'num_layers': 10}}, 'hyperparameters': {'verbose': 0, 'batch_size': 100, 'learning_rate': 0.001, 'optimizer': 'adam', 'num_epochs': 1, 'callbacks': {'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 0, 'patience': 5}}}, 'load_data': {'func': 'nas_problems.polynome2.load_data.load_data', 'kwargs': {}}, 'loss': 'mse', 'metrics': ['r2'], 'objective': 'val_r2__last', 'post_train': {'num_epochs': 1000, 'metrics': ['r2'], 'callbacks': {'ModelCheckpoint': {'monitor': 'val_r2', 'mode': 'max', 'save_best_only': True, 'verbose': 1}, 'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 1, 'patience': 50}, 'TensorBoard': {'log_dir': '1565802879.512017'}}}, 'preprocessing': {'func': 'deephyper.search.nas.model.preprocessing.minmaxstdscaler'}, 'seed': None, 'arch_seq': [3, 0, 7, 0, 0, 20, 0, 0, 0, 10, 1, 0, 0, 8, 0, 0, 1, 10, 1, 1, 1, 10, 0, 1, 0, 16, 0, 0, 1, 14, 1, 1, 1, 7, 0, 0, 1]} y: 0.75563425
+2019-08-14 12:14:51|4902|INFO|deephyper.search.nas.regevo:104] >>> {"type": "env_stats", "num_cache_used": 0}
+2019-08-14 12:14:51|4902|INFO|deephyper.evaluator.evaluate:151] Submitted new eval of OrderedDict([('create_structure', {'func': <function create_search_space at 0x12e30f1e0>, 'kwargs': {'num_layers': 10}}), ('hyperparameters', {'verbose': 0, 'batch_size': 100, 'learning_rate': 0.001, 'optimizer': 'adam', 'num_epochs': 1, 'callbacks': {'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 0, 'patience': 5}}}), ('load_data', {'func': <function load_data at 0x11bb1f510>, 'kwargs': {}}), ('loss', 'mse'), ('metrics', ['r2']), ('objective', 'val_r2__last'), ('post_train', {'num_epochs': 1000, 'metrics': ['r2'], 'callbacks': {'ModelCheckpoint': {'monitor': 'val_r2', 'mode': 'max', 'save_best_only': True, 'verbose': 1}, 'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 1, 'patience': 50}, 'TensorBoard': {'log_dir': '1565802879.512017'}}}), ('preprocessing', {'func': <function minmaxstdscaler at 0x11a713620>}), ('seed', None), ('arch_seq', [12, 1, 9, 1, 1, 13, 0, 0, 1, 13, 1, 0, 0, 13, 0, 1, 1, 7, 0, 1, 0, 24, 0, 1, 1, 5, 1, 0, 0, 21, 0, 1, 0, 21, 0, 1, 0])])
+2019-08-14 12:14:53|4910|INFO|deephyper:50] 
+
+Loading Deephyper
+--------------
+2019-08-14 12:14:54|4910|INFO|deephyper.search.nas.run:28] Data loaded with kwargs: {}
+2019-08-14 12:14:54|4910|INFO|deephyper.search.nas.run:65] input_shape: (116,)
+2019-08-14 12:14:54|4910|INFO|deephyper.search.nas.run:66] output_shape: (116,)
+2019-08-14 12:14:54|4910|INFO|deephyper.search.nas.run:81] actions list: [12, 1, 9, 1, 1, 13, 0, 0, 1, 13, 1, 0, 0, 13, 0, 1, 1, 7, 0, 1, 0, 24, 0, 1, 1, 5, 1, 0, 0, 21, 0, 1, 0, 21, 0, 1, 0]
+2019-08-14 12:14:55|4910|DEBUG|deephyper.model.trainer:78] load_data
+2019-08-14 12:14:55|4910|DEBUG|deephyper.model.trainer:81] data config type: ndarray
+2019-08-14 12:14:55|4910|DEBUG|deephyper.model.trainer:136] TrainerTrainValid: 1 inputs
+2019-08-14 12:14:55|4910|DEBUG|deephyper.model.trainer:158] preprocess_data with: <function minmaxstdscaler at 0x13354d400>
+2019-08-14 12:14:56|4910|DEBUG|deephyper.model.trainer:71] [PARAM] KerasTrainer instantiated
+2019-08-14 12:14:56|4910|INFO|deephyper.model.trainer:306] Trainer is computing metrics on validation after each training epoch.
+2019-08-14 12:15:04|4902|INFO|deephyper.evaluator.evaluate:245] New eval finished: {"arch_seq": [12, 1, 9, 1, 1, 13, 0, 0, 1, 13, 1, 0, 0, 13, 0, 1, 1, 7, 0, 1, 0, 24, 0, 1, 1, 5, 1, 0, 0, 21, 0, 1, 0, 21, 0, 1, 0]} --> 0.8645542
+2019-08-14 12:15:04|4902|INFO|deephyper.evaluator.evaluate:256] Requested eval x: {'create_structure': {'func': 'nas_problems.polynome2.architecture.create_search_space', 'kwargs': {'num_layers': 10}}, 'hyperparameters': {'verbose': 0, 'batch_size': 100, 'learning_rate': 0.001, 'optimizer': 'adam', 'num_epochs': 1, 'callbacks': {'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 0, 'patience': 5}}}, 'load_data': {'func': 'nas_problems.polynome2.load_data.load_data', 'kwargs': {}}, 'loss': 'mse', 'metrics': ['r2'], 'objective': 'val_r2__last', 'post_train': {'num_epochs': 1000, 'metrics': ['r2'], 'callbacks': {'ModelCheckpoint': {'monitor': 'val_r2', 'mode': 'max', 'save_best_only': True, 'verbose': 1}, 'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 1, 'patience': 50}, 'TensorBoard': {'log_dir': '1565802879.512017'}}}, 'preprocessing': {'func': 'deephyper.search.nas.model.preprocessing.minmaxstdscaler'}, 'seed': None, 'arch_seq': [12, 1, 9, 1, 1, 13, 0, 0, 1, 13, 1, 0, 0, 13, 0, 1, 1, 7, 0, 1, 0, 24, 0, 1, 1, 5, 1, 0, 0, 21, 0, 1, 0, 21, 0, 1, 0]} y: 0.8645542
+2019-08-14 12:15:04|4902|INFO|deephyper.search.nas.regevo:104] >>> {"type": "env_stats", "num_cache_used": 0}
+2019-08-14 12:15:04|4902|INFO|deephyper.evaluator.evaluate:151] Submitted new eval of OrderedDict([('create_structure', {'func': <function create_search_space at 0x12e30f1e0>, 'kwargs': {'num_layers': 10}}), ('hyperparameters', {'verbose': 0, 'batch_size': 100, 'learning_rate': 0.001, 'optimizer': 'adam', 'num_epochs': 1, 'callbacks': {'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 0, 'patience': 5}}}), ('load_data', {'func': <function load_data at 0x11bb1f510>, 'kwargs': {}}), ('loss', 'mse'), ('metrics', ['r2']), ('objective', 'val_r2__last'), ('post_train', {'num_epochs': 1000, 'metrics': ['r2'], 'callbacks': {'ModelCheckpoint': {'monitor': 'val_r2', 'mode': 'max', 'save_best_only': True, 'verbose': 1}, 'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 1, 'patience': 50}, 'TensorBoard': {'log_dir': '1565802879.512017'}}}), ('preprocessing', {'func': <function minmaxstdscaler at 0x11a713620>}), ('seed', None), ('arch_seq', [13, 0, 12, 1, 1, 22, 0, 1, 0, 5, 0, 0, 0, 6, 0, 0, 1, 3, 1, 0, 1, 7, 0, 0, 1, 18, 0, 0, 0, 2, 0, 0, 0, 19, 0, 0, 1])])
+2019-08-14 12:15:06|4914|INFO|deephyper:50] 
+
+Loading Deephyper
+--------------
+2019-08-14 12:15:07|4914|INFO|deephyper.search.nas.run:28] Data loaded with kwargs: {}
+2019-08-14 12:15:07|4914|INFO|deephyper.search.nas.run:65] input_shape: (116,)
+2019-08-14 12:15:07|4914|INFO|deephyper.search.nas.run:66] output_shape: (116,)
+2019-08-14 12:15:07|4914|INFO|deephyper.search.nas.run:81] actions list: [13, 0, 12, 1, 1, 22, 0, 1, 0, 5, 0, 0, 0, 6, 0, 0, 1, 3, 1, 0, 1, 7, 0, 0, 1, 18, 0, 0, 0, 2, 0, 0, 0, 19, 0, 0, 1]
+2019-08-14 12:15:07|4914|DEBUG|deephyper.model.trainer:78] load_data
+2019-08-14 12:15:07|4914|DEBUG|deephyper.model.trainer:81] data config type: ndarray
+2019-08-14 12:15:07|4914|DEBUG|deephyper.model.trainer:136] TrainerTrainValid: 1 inputs
+2019-08-14 12:15:07|4914|DEBUG|deephyper.model.trainer:158] preprocess_data with: <function minmaxstdscaler at 0x1323fa400>
+2019-08-14 12:15:08|4914|DEBUG|deephyper.model.trainer:71] [PARAM] KerasTrainer instantiated
+2019-08-14 12:15:08|4914|INFO|deephyper.model.trainer:306] Trainer is computing metrics on validation after each training epoch.
+2019-08-14 12:15:16|4902|INFO|deephyper.evaluator.evaluate:245] New eval finished: {"arch_seq": [13, 0, 12, 1, 1, 22, 0, 1, 0, 5, 0, 0, 0, 6, 0, 0, 1, 3, 1, 0, 1, 7, 0, 0, 1, 18, 0, 0, 0, 2, 0, 0, 0, 19, 0, 0, 1]} --> 0.88090247
+2019-08-14 12:15:16|4902|INFO|deephyper.evaluator.evaluate:256] Requested eval x: {'create_structure': {'func': 'nas_problems.polynome2.architecture.create_search_space', 'kwargs': {'num_layers': 10}}, 'hyperparameters': {'verbose': 0, 'batch_size': 100, 'learning_rate': 0.001, 'optimizer': 'adam', 'num_epochs': 1, 'callbacks': {'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 0, 'patience': 5}}}, 'load_data': {'func': 'nas_problems.polynome2.load_data.load_data', 'kwargs': {}}, 'loss': 'mse', 'metrics': ['r2'], 'objective': 'val_r2__last', 'post_train': {'num_epochs': 1000, 'metrics': ['r2'], 'callbacks': {'ModelCheckpoint': {'monitor': 'val_r2', 'mode': 'max', 'save_best_only': True, 'verbose': 1}, 'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 1, 'patience': 50}, 'TensorBoard': {'log_dir': '1565802879.512017'}}}, 'preprocessing': {'func': 'deephyper.search.nas.model.preprocessing.minmaxstdscaler'}, 'seed': None, 'arch_seq': [13, 0, 12, 1, 1, 22, 0, 1, 0, 5, 0, 0, 0, 6, 0, 0, 1, 3, 1, 0, 1, 7, 0, 0, 1, 18, 0, 0, 0, 2, 0, 0, 0, 19, 0, 0, 1]} y: 0.88090247
+2019-08-14 12:15:16|4902|INFO|deephyper.search.nas.regevo:104] >>> {"type": "env_stats", "num_cache_used": 0}
+2019-08-14 12:15:16|4902|INFO|deephyper.evaluator.evaluate:151] Submitted new eval of OrderedDict([('create_structure', {'func': <function create_search_space at 0x12e30f1e0>, 'kwargs': {'num_layers': 10}}), ('hyperparameters', {'verbose': 0, 'batch_size': 100, 'learning_rate': 0.001, 'optimizer': 'adam', 'num_epochs': 1, 'callbacks': {'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 0, 'patience': 5}}}), ('load_data', {'func': <function load_data at 0x11bb1f510>, 'kwargs': {}}), ('loss', 'mse'), ('metrics', ['r2']), ('objective', 'val_r2__last'), ('post_train', {'num_epochs': 1000, 'metrics': ['r2'], 'callbacks': {'ModelCheckpoint': {'monitor': 'val_r2', 'mode': 'max', 'save_best_only': True, 'verbose': 1}, 'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 1, 'patience': 50}, 'TensorBoard': {'log_dir': '1565802879.512017'}}}), ('preprocessing', {'func': <function minmaxstdscaler at 0x11a713620>}), ('seed', None), ('arch_seq', [13, 0, 9, 1, 1, 6, 1, 1, 1, 4, 1, 1, 1, 6, 1, 1, 1, 9, 0, 1, 1, 2, 0, 0, 0, 9, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0])])
+2019-08-14 12:15:17|4919|INFO|deephyper:50] 
+
+Loading Deephyper
+--------------
+2019-08-14 12:15:19|4919|INFO|deephyper.search.nas.run:28] Data loaded with kwargs: {}
+2019-08-14 12:15:19|4919|INFO|deephyper.search.nas.run:65] input_shape: (116,)
+2019-08-14 12:15:19|4919|INFO|deephyper.search.nas.run:66] output_shape: (116,)
+2019-08-14 12:15:19|4919|INFO|deephyper.search.nas.run:81] actions list: [13, 0, 9, 1, 1, 6, 1, 1, 1, 4, 1, 1, 1, 6, 1, 1, 1, 9, 0, 1, 1, 2, 0, 0, 0, 9, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0]
+2019-08-14 12:15:19|4919|DEBUG|deephyper.model.trainer:78] load_data
+2019-08-14 12:15:19|4919|DEBUG|deephyper.model.trainer:81] data config type: ndarray
+2019-08-14 12:15:19|4919|DEBUG|deephyper.model.trainer:136] TrainerTrainValid: 1 inputs
+2019-08-14 12:15:19|4919|DEBUG|deephyper.model.trainer:158] preprocess_data with: <function minmaxstdscaler at 0x13145f400>
+2019-08-14 12:15:20|4919|DEBUG|deephyper.model.trainer:71] [PARAM] KerasTrainer instantiated
+2019-08-14 12:15:20|4919|INFO|deephyper.model.trainer:306] Trainer is computing metrics on validation after each training epoch.
+2019-08-14 12:15:29|4902|INFO|deephyper.evaluator.evaluate:245] New eval finished: {"arch_seq": [13, 0, 9, 1, 1, 6, 1, 1, 1, 4, 1, 1, 1, 6, 1, 1, 1, 9, 0, 1, 1, 2, 0, 0, 0, 9, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0]} --> 0.0210897
+2019-08-14 12:15:29|4902|INFO|deephyper.evaluator.evaluate:256] Requested eval x: {'create_structure': {'func': 'nas_problems.polynome2.architecture.create_search_space', 'kwargs': {'num_layers': 10}}, 'hyperparameters': {'verbose': 0, 'batch_size': 100, 'learning_rate': 0.001, 'optimizer': 'adam', 'num_epochs': 1, 'callbacks': {'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 0, 'patience': 5}}}, 'load_data': {'func': 'nas_problems.polynome2.load_data.load_data', 'kwargs': {}}, 'loss': 'mse', 'metrics': ['r2'], 'objective': 'val_r2__last', 'post_train': {'num_epochs': 1000, 'metrics': ['r2'], 'callbacks': {'ModelCheckpoint': {'monitor': 'val_r2', 'mode': 'max', 'save_best_only': True, 'verbose': 1}, 'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 1, 'patience': 50}, 'TensorBoard': {'log_dir': '1565802879.512017'}}}, 'preprocessing': {'func': 'deephyper.search.nas.model.preprocessing.minmaxstdscaler'}, 'seed': None, 'arch_seq': [13, 0, 9, 1, 1, 6, 1, 1, 1, 4, 1, 1, 1, 6, 1, 1, 1, 9, 0, 1, 1, 2, 0, 0, 0, 9, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0]} y: 0.0210897
+2019-08-14 12:15:29|4902|INFO|deephyper.search.nas.regevo:104] >>> {"type": "env_stats", "num_cache_used": 0}
+2019-08-14 12:15:29|4902|INFO|deephyper.evaluator.evaluate:151] Submitted new eval of OrderedDict([('create_structure', {'func': <function create_search_space at 0x12e30f1e0>, 'kwargs': {'num_layers': 10}}), ('hyperparameters', {'verbose': 0, 'batch_size': 100, 'learning_rate': 0.001, 'optimizer': 'adam', 'num_epochs': 1, 'callbacks': {'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 0, 'patience': 5}}}), ('load_data', {'func': <function load_data at 0x11bb1f510>, 'kwargs': {}}), ('loss', 'mse'), ('metrics', ['r2']), ('objective', 'val_r2__last'), ('post_train', {'num_epochs': 1000, 'metrics': ['r2'], 'callbacks': {'ModelCheckpoint': {'monitor': 'val_r2', 'mode': 'max', 'save_best_only': True, 'verbose': 1}, 'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 1, 'patience': 50}, 'TensorBoard': {'log_dir': '1565802879.512017'}}}), ('preprocessing', {'func': <function minmaxstdscaler at 0x11a713620>}), ('seed', None), ('arch_seq', [24, 1, 19, 0, 1, 5, 1, 0, 0, 21, 1, 0, 0, 21, 0, 0, 0, 5, 1, 0, 0, 2, 1, 1, 1, 14, 0, 1, 1, 24, 1, 0, 1, 17, 1, 1, 1])])
+2019-08-14 12:15:31|4928|INFO|deephyper:50] 
+
+Loading Deephyper
+--------------
+2019-08-14 12:15:33|4928|INFO|deephyper.search.nas.run:28] Data loaded with kwargs: {}
+2019-08-14 12:15:33|4928|INFO|deephyper.search.nas.run:65] input_shape: (116,)
+2019-08-14 12:15:33|4928|INFO|deephyper.search.nas.run:66] output_shape: (116,)
+2019-08-14 12:15:33|4928|INFO|deephyper.search.nas.run:81] actions list: [24, 1, 19, 0, 1, 5, 1, 0, 0, 21, 1, 0, 0, 21, 0, 0, 0, 5, 1, 0, 0, 2, 1, 1, 1, 14, 0, 1, 1, 24, 1, 0, 1, 17, 1, 1, 1]
+2019-08-14 12:15:33|4928|DEBUG|deephyper.model.trainer:78] load_data
+2019-08-14 12:15:33|4928|DEBUG|deephyper.model.trainer:81] data config type: ndarray
+2019-08-14 12:15:33|4928|DEBUG|deephyper.model.trainer:136] TrainerTrainValid: 1 inputs
+2019-08-14 12:15:33|4928|DEBUG|deephyper.model.trainer:158] preprocess_data with: <function minmaxstdscaler at 0x12f796400>
+2019-08-14 12:15:34|4928|DEBUG|deephyper.model.trainer:71] [PARAM] KerasTrainer instantiated
+2019-08-14 12:15:34|4928|INFO|deephyper.model.trainer:306] Trainer is computing metrics on validation after each training epoch.
+2019-08-14 12:15:45|4902|INFO|deephyper.evaluator.evaluate:245] New eval finished: {"arch_seq": [24, 1, 19, 0, 1, 5, 1, 0, 0, 21, 1, 0, 0, 21, 0, 0, 0, 5, 1, 0, 0, 2, 1, 1, 1, 14, 0, 1, 1, 24, 1, 0, 1, 17, 1, 1, 1]} --> 0.803457
+2019-08-14 12:15:45|4902|INFO|deephyper.evaluator.evaluate:256] Requested eval x: {'create_structure': {'func': 'nas_problems.polynome2.architecture.create_search_space', 'kwargs': {'num_layers': 10}}, 'hyperparameters': {'verbose': 0, 'batch_size': 100, 'learning_rate': 0.001, 'optimizer': 'adam', 'num_epochs': 1, 'callbacks': {'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 0, 'patience': 5}}}, 'load_data': {'func': 'nas_problems.polynome2.load_data.load_data', 'kwargs': {}}, 'loss': 'mse', 'metrics': ['r2'], 'objective': 'val_r2__last', 'post_train': {'num_epochs': 1000, 'metrics': ['r2'], 'callbacks': {'ModelCheckpoint': {'monitor': 'val_r2', 'mode': 'max', 'save_best_only': True, 'verbose': 1}, 'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 1, 'patience': 50}, 'TensorBoard': {'log_dir': '1565802879.512017'}}}, 'preprocessing': {'func': 'deephyper.search.nas.model.preprocessing.minmaxstdscaler'}, 'seed': None, 'arch_seq': [24, 1, 19, 0, 1, 5, 1, 0, 0, 21, 1, 0, 0, 21, 0, 0, 0, 5, 1, 0, 0, 2, 1, 1, 1, 14, 0, 1, 1, 24, 1, 0, 1, 17, 1, 1, 1]} y: 0.803457
+2019-08-14 12:15:45|4902|INFO|deephyper.search.nas.regevo:104] >>> {"type": "env_stats", "num_cache_used": 0}
+2019-08-14 12:15:45|4902|INFO|deephyper.evaluator.evaluate:151] Submitted new eval of OrderedDict([('create_structure', {'func': <function create_search_space at 0x12e30f1e0>, 'kwargs': {'num_layers': 10}}), ('hyperparameters', {'verbose': 0, 'batch_size': 100, 'learning_rate': 0.001, 'optimizer': 'adam', 'num_epochs': 1, 'callbacks': {'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 0, 'patience': 5}}}), ('load_data', {'func': <function load_data at 0x11bb1f510>, 'kwargs': {}}), ('loss', 'mse'), ('metrics', ['r2']), ('objective', 'val_r2__last'), ('post_train', {'num_epochs': 1000, 'metrics': ['r2'], 'callbacks': {'ModelCheckpoint': {'monitor': 'val_r2', 'mode': 'max', 'save_best_only': True, 'verbose': 1}, 'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 1, 'patience': 50}, 'TensorBoard': {'log_dir': '1565802879.512017'}}}), ('preprocessing', {'func': <function minmaxstdscaler at 0x11a713620>}), ('seed', None), ('arch_seq', [15, 1, 14, 1, 0, 9, 1, 1, 0, 1, 0, 1, 1, 19, 0, 1, 0, 17, 0, 0, 1, 9, 1, 1, 0, 11, 0, 1, 1, 3, 1, 0, 0, 18, 0, 1, 0])])
+2019-08-14 12:15:47|4932|INFO|deephyper:50] 
+
+Loading Deephyper
+--------------
+2019-08-14 12:15:48|4932|INFO|deephyper.search.nas.run:28] Data loaded with kwargs: {}
+2019-08-14 12:15:48|4932|INFO|deephyper.search.nas.run:65] input_shape: (116,)
+2019-08-14 12:15:48|4932|INFO|deephyper.search.nas.run:66] output_shape: (116,)
+2019-08-14 12:15:48|4932|INFO|deephyper.search.nas.run:81] actions list: [15, 1, 14, 1, 0, 9, 1, 1, 0, 1, 0, 1, 1, 19, 0, 1, 0, 17, 0, 0, 1, 9, 1, 1, 0, 11, 0, 1, 1, 3, 1, 0, 0, 18, 0, 1, 0]
+2019-08-14 12:15:49|4932|DEBUG|deephyper.model.trainer:78] load_data
+2019-08-14 12:15:49|4932|DEBUG|deephyper.model.trainer:81] data config type: ndarray
+2019-08-14 12:15:49|4932|DEBUG|deephyper.model.trainer:136] TrainerTrainValid: 1 inputs
+2019-08-14 12:15:49|4932|DEBUG|deephyper.model.trainer:158] preprocess_data with: <function minmaxstdscaler at 0x1318a6400>
+2019-08-14 12:15:50|4932|DEBUG|deephyper.model.trainer:71] [PARAM] KerasTrainer instantiated
+2019-08-14 12:15:50|4932|INFO|deephyper.model.trainer:306] Trainer is computing metrics on validation after each training epoch.
+2019-08-14 12:15:59|4902|INFO|deephyper.evaluator.evaluate:245] New eval finished: {"arch_seq": [15, 1, 14, 1, 0, 9, 1, 1, 0, 1, 0, 1, 1, 19, 0, 1, 0, 17, 0, 0, 1, 9, 1, 1, 0, 11, 0, 1, 1, 3, 1, 0, 0, 18, 0, 1, 0]} --> 0.90832025
+2019-08-14 12:15:59|4902|INFO|deephyper.evaluator.evaluate:256] Requested eval x: {'create_structure': {'func': 'nas_problems.polynome2.architecture.create_search_space', 'kwargs': {'num_layers': 10}}, 'hyperparameters': {'verbose': 0, 'batch_size': 100, 'learning_rate': 0.001, 'optimizer': 'adam', 'num_epochs': 1, 'callbacks': {'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 0, 'patience': 5}}}, 'load_data': {'func': 'nas_problems.polynome2.load_data.load_data', 'kwargs': {}}, 'loss': 'mse', 'metrics': ['r2'], 'objective': 'val_r2__last', 'post_train': {'num_epochs': 1000, 'metrics': ['r2'], 'callbacks': {'ModelCheckpoint': {'monitor': 'val_r2', 'mode': 'max', 'save_best_only': True, 'verbose': 1}, 'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 1, 'patience': 50}, 'TensorBoard': {'log_dir': '1565802879.512017'}}}, 'preprocessing': {'func': 'deephyper.search.nas.model.preprocessing.minmaxstdscaler'}, 'seed': None, 'arch_seq': [15, 1, 14, 1, 0, 9, 1, 1, 0, 1, 0, 1, 1, 19, 0, 1, 0, 17, 0, 0, 1, 9, 1, 1, 0, 11, 0, 1, 1, 3, 1, 0, 0, 18, 0, 1, 0]} y: 0.90832025
+2019-08-14 12:15:59|4902|INFO|deephyper.search.nas.regevo:104] >>> {"type": "env_stats", "num_cache_used": 0}
+2019-08-14 12:15:59|4902|INFO|deephyper.evaluator.evaluate:151] Submitted new eval of OrderedDict([('create_structure', {'func': <function create_search_space at 0x12e30f1e0>, 'kwargs': {'num_layers': 10}}), ('hyperparameters', {'verbose': 0, 'batch_size': 100, 'learning_rate': 0.001, 'optimizer': 'adam', 'num_epochs': 1, 'callbacks': {'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 0, 'patience': 5}}}), ('load_data', {'func': <function load_data at 0x11bb1f510>, 'kwargs': {}}), ('loss', 'mse'), ('metrics', ['r2']), ('objective', 'val_r2__last'), ('post_train', {'num_epochs': 1000, 'metrics': ['r2'], 'callbacks': {'ModelCheckpoint': {'monitor': 'val_r2', 'mode': 'max', 'save_best_only': True, 'verbose': 1}, 'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 1, 'patience': 50}, 'TensorBoard': {'log_dir': '1565802879.512017'}}}), ('preprocessing', {'func': <function minmaxstdscaler at 0x11a713620>}), ('seed', None), ('arch_seq', [16, 1, 21, 1, 1, 15, 0, 1, 1, 12, 1, 0, 1, 4, 0, 0, 1, 21, 0, 1, 1, 9, 1, 0, 0, 8, 0, 1, 0, 22, 1, 0, 1, 8, 0, 1, 1])])
+2019-08-14 12:16:00|4936|INFO|deephyper:50] 
+
+Loading Deephyper
+--------------
+2019-08-14 12:16:01|4936|INFO|deephyper.search.nas.run:28] Data loaded with kwargs: {}
+2019-08-14 12:16:01|4936|INFO|deephyper.search.nas.run:65] input_shape: (116,)
+2019-08-14 12:16:01|4936|INFO|deephyper.search.nas.run:66] output_shape: (116,)
+2019-08-14 12:16:01|4902|ERROR|deephyper:54] Uncaught exception:
+Traceback (most recent call last):
+  File "/Users/yzamora/miniconda3/envs/deep_hyper/lib/python3.6/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/Users/yzamora/miniconda3/envs/deep_hyper/lib/python3.6/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/Users/yzamora/deephyper/deephyper/search/nas/regevo.py", line 174, in <module>
+    search.main()
+  File "/Users/yzamora/deephyper/deephyper/search/nas/regevo.py", line 96, in main
+    new_results = list(self.evaluator.get_finished_evals())
+  File "/Users/yzamora/deephyper/deephyper/evaluator/evaluate.py", line 238, in get_finished_evals
+    return_when='ANY_COMPLETED')
+  File "/Users/yzamora/deephyper/deephyper/evaluator/_subprocess.py", line 125, in wait
+    active_futures = [f for f in futures if f.active]
+  File "/Users/yzamora/deephyper/deephyper/evaluator/_subprocess.py", line 125, in <listcomp>
+    active_futures = [f for f in futures if f.active]
+  File "/Users/yzamora/deephyper/deephyper/evaluator/_subprocess.py", line 63, in active
+    self._poll()
+  File "/Users/yzamora/deephyper/deephyper/evaluator/_subprocess.py", line 28, in _poll
+    stdout, stderr_data = self.proc.communicate()
+  File "/Users/yzamora/miniconda3/envs/deep_hyper/lib/python3.6/subprocess.py", line 850, in communicate
+    stdout = self.stdout.read()
+KeyboardInterrupt
+2019-08-14 12:16:01|4936|ERROR|deephyper:54] Uncaught exception:
+Traceback (most recent call last):
+  File "/Users/yzamora/deephyper/deephyper/evaluator/runner.py", line 36, in <module>
+    retval = func(d)
+  File "/Users/yzamora/deephyper/deephyper/search/nas/model/run/alpha.py", line 45, in run
+    architecture = setup_structure(config, input_shape, output_shape)
+  File "/Users/yzamora/deephyper/deephyper/search/nas/model/run/util.py", line 78, in setup_structure
+    architecture = create_structure(input_shape, output_shape, **cs_kwargs)
+  File "/Users/yzamora/nas_problems/nas_problems/polynome2/architecture.py", line 39, in create_search_space
+    arch.connect(prev_input, vnode)
+  File "/Users/yzamora/deephyper/deephyper/search/nas/model/space/architecture/nx_architecture.py", line 82, in connect
+    if not(nx.is_directed_acyclic_graph(self.graph)):
+  File "/Users/yzamora/miniconda3/envs/deep_hyper/lib/python3.6/site-packages/networkx/algorithms/dag.py", line 118, in is_directed_acyclic_graph
+    return G.is_directed() and not has_cycle(G)
+  File "/Users/yzamora/miniconda3/envs/deep_hyper/lib/python3.6/site-packages/networkx/algorithms/dag.py", line 98, in has_cycle
+    consume(topological_sort(G))
+  File "/Users/yzamora/miniconda3/envs/deep_hyper/lib/python3.6/site-packages/networkx/utils/misc.py", line 241, in consume
+    deque(iterator, maxlen=0)
+  File "/Users/yzamora/miniconda3/envs/deep_hyper/lib/python3.6/site-packages/networkx/algorithms/dag.py", line 196, in topological_sort
+    for _, child in G.edges(node):
+  File "/Users/yzamora/miniconda3/envs/deep_hyper/lib/python3.6/site-packages/networkx/classes/reportviews.py", line 667, in <genexpr>
+    for nbr, dd in nbrs.items())
+KeyboardInterrupt
+2019-08-14 12:16:26|4941|INFO|deephyper:50] 
+
+Loading Deephyper
+--------------
+2019-08-14 12:16:27|4941|INFO|deephyper.search.search:49] Evaluator will execute the function: deephyper.search.nas.model.run.alpha.run
+2019-08-14 12:16:27|4941|INFO|deephyper.evaluator._subprocess:98] Subprocess Evaluator will execute run() from module deephyper.search.nas.model.run.alpha
+2019-08-14 12:16:27|4941|INFO|deephyper.search.search:57] Options: {   'backend': 'tensorflow',
+    'cache_key': <function key at 0x10c097598>,
+    'eval_timeout_minutes': 4096,
+    'evaluator': 'subprocess',
+    'max_evals': 10000000000.0,
+    'problem': 'nas_problems.polynome2.problem.Problem',
+    'redis_address': None,
+    'run': 'deephyper.search.nas.model.run.alpha.run',
+    'seed': None}
+2019-08-14 12:16:27|4941|INFO|deephyper.search.search:59] Hyperparameter space definition: OrderedDict([   (   'create_structure',
+                    {   'func': <function create_search_space at 0x12e84b1e0>,
+                        'kwargs': {'num_layers': 10}}),
+                (   'hyperparameters',
+                    {   'batch_size': 100,
+                        'callbacks': {   'EarlyStopping': {   'mode': 'max',
+                                                              'monitor': 'val_r2',
+                                                              'patience': 5,
+                                                              'verbose': 0}},
+                        'learning_rate': 0.001,
+                        'num_epochs': 50,
+                        'optimizer': 'adam',
+                        'verbose': 0}),
+                (   'load_data',
+                    {   'func': <function load_data at 0x11c05b510>,
+                        'kwargs': {}}),
+                ('loss', 'mse'),
+                ('metrics', ['r2']),
+                ('objective', 'val_r2__last'),
+                (   'post_train',
+                    {   'callbacks': {   'EarlyStopping': {   'mode': 'max',
+                                                              'monitor': 'val_r2',
+                                                              'patience': 50,
+                                                              'verbose': 1},
+                                         'ModelCheckpoint': {   'mode': 'max',
+                                                                'monitor': 'val_r2',
+                                                                'save_best_only': True,
+                                                                'verbose': 1},
+                                         'TensorBoard': {   'log_dir': '1565802987.8285298'}},
+                        'metrics': ['r2'],
+                        'num_epochs': 1000}),
+                (   'preprocessing',
+                    {'func': <function minmaxstdscaler at 0x10d87f620>}),
+                ('seed', None)])
+2019-08-14 12:16:27|4941|INFO|deephyper.search.search:60] Created subprocess evaluator
+2019-08-14 12:16:27|4941|INFO|deephyper.search.search:61] Evaluator: num_workers is 1
+2019-08-14 12:16:27|4941|INFO|deephyper.search.nas.regevo:47] >>> {"type": "start_infos", "alg": "aging-evolution", "nworkers": 1, "encoded_space": "{\"create_structure\": {\"func\": \"nas_problems.polynome2.architecture.create_search_space\", \"kwargs\": {\"num_layers\": 10}}, \"hyperparameters\": {\"verbose\": 0, \"batch_size\": 100, \"learning_rate\": 0.001, \"optimizer\": \"adam\", \"num_epochs\": 50, \"callbacks\": {\"EarlyStopping\": {\"monitor\": \"val_r2\", \"mode\": \"max\", \"verbose\": 0, \"patience\": 5}}}, \"load_data\": {\"func\": \"nas_problems.polynome2.load_data.load_data\", \"kwargs\": {}}, \"loss\": \"mse\", \"metrics\": [\"r2\"], \"objective\": \"val_r2__last\", \"post_train\": {\"num_epochs\": 1000, \"metrics\": [\"r2\"], \"callbacks\": {\"ModelCheckpoint\": {\"monitor\": \"val_r2\", \"mode\": \"max\", \"save_best_only\": true, \"verbose\": 1}, \"EarlyStopping\": {\"monitor\": \"val_r2\", \"mode\": \"max\", \"verbose\": 1, \"patience\": 50}, \"TensorBoard\": {\"log_dir\": \"1565802987.8285298\"}}}, \"preprocessing\": {\"func\": \"deephyper.search.nas.model.preprocessing.minmaxstdscaler\"}, \"seed\": null}"}
+2019-08-14 12:16:27|4941|INFO|deephyper.evaluator.evaluate:151] Submitted new eval of OrderedDict([('create_structure', {'func': <function create_search_space at 0x12e84b1e0>, 'kwargs': {'num_layers': 10}}), ('hyperparameters', {'verbose': 0, 'batch_size': 100, 'learning_rate': 0.001, 'optimizer': 'adam', 'num_epochs': 50, 'callbacks': {'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 0, 'patience': 5}}}), ('load_data', {'func': <function load_data at 0x11c05b510>, 'kwargs': {}}), ('loss', 'mse'), ('metrics', ['r2']), ('objective', 'val_r2__last'), ('post_train', {'num_epochs': 1000, 'metrics': ['r2'], 'callbacks': {'ModelCheckpoint': {'monitor': 'val_r2', 'mode': 'max', 'save_best_only': True, 'verbose': 1}, 'EarlyStopping': {'monitor': 'val_r2', 'mode': 'max', 'verbose': 1, 'patience': 50}, 'TensorBoard': {'log_dir': '1565802987.8285298'}}}), ('preprocessing', {'func': <function minmaxstdscaler at 0x10d87f620>}), ('seed', None), ('arch_seq', [0, 0, 18, 1, 1, 0, 1, 1, 1, 11, 0, 0, 1, 1, 1, 0, 1, 5, 0, 0, 1, 5, 1, 1, 1, 21, 1, 0, 1, 8, 1, 0, 0, 19, 0, 0, 0])])
+2019-08-14 12:16:29|4945|INFO|deephyper:50] 
+
+Loading Deephyper
+--------------
+2019-08-14 12:16:30|4945|INFO|deephyper.search.nas.run:28] Data loaded with kwargs: {}
+2019-08-14 12:16:30|4945|INFO|deephyper.search.nas.run:65] input_shape: (116,)
+2019-08-14 12:16:30|4945|INFO|deephyper.search.nas.run:66] output_shape: (116,)
+2019-08-14 12:16:30|4945|INFO|deephyper.search.nas.run:81] actions list: [0, 0, 18, 1, 1, 0, 1, 1, 1, 11, 0, 0, 1, 1, 1, 0, 1, 5, 0, 0, 1, 5, 1, 1, 1, 21, 1, 0, 1, 8, 1, 0, 0, 19, 0, 0, 0]
+2019-08-14 12:16:30|4945|DEBUG|deephyper.model.trainer:78] load_data
+2019-08-14 12:16:30|4945|DEBUG|deephyper.model.trainer:81] data config type: ndarray
+2019-08-14 12:16:30|4945|DEBUG|deephyper.model.trainer:136] TrainerTrainValid: 1 inputs
+2019-08-14 12:16:30|4945|DEBUG|deephyper.model.trainer:158] preprocess_data with: <function minmaxstdscaler at 0x13a243400>
+2019-08-14 12:16:31|4945|DEBUG|deephyper.model.trainer:71] [PARAM] KerasTrainer instantiated
+2019-08-14 12:16:31|4945|INFO|deephyper.model.trainer:306] Trainer is computing metrics on validation after each training epoch.
+2019-08-14 12:16:40|4941|ERROR|deephyper:54] Uncaught exception:
+Traceback (most recent call last):
+  File "/Users/yzamora/miniconda3/envs/deep_hyper/lib/python3.6/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/Users/yzamora/miniconda3/envs/deep_hyper/lib/python3.6/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/Users/yzamora/deephyper/deephyper/search/nas/regevo.py", line 174, in <module>
+    search.main()
+  File "/Users/yzamora/deephyper/deephyper/search/nas/regevo.py", line 96, in main
+    new_results = list(self.evaluator.get_finished_evals())
+  File "/Users/yzamora/deephyper/deephyper/evaluator/evaluate.py", line 238, in get_finished_evals
+    return_when='ANY_COMPLETED')
+  File "/Users/yzamora/deephyper/deephyper/evaluator/_subprocess.py", line 125, in wait
+    active_futures = [f for f in futures if f.active]
+  File "/Users/yzamora/deephyper/deephyper/evaluator/_subprocess.py", line 125, in <listcomp>
+    active_futures = [f for f in futures if f.active]
+  File "/Users/yzamora/deephyper/deephyper/evaluator/_subprocess.py", line 63, in active
+    self._poll()
+  File "/Users/yzamora/deephyper/deephyper/evaluator/_subprocess.py", line 28, in _poll
+    stdout, stderr_data = self.proc.communicate()
+  File "/Users/yzamora/miniconda3/envs/deep_hyper/lib/python3.6/subprocess.py", line 850, in communicate
+    stdout = self.stdout.read()
+KeyboardInterrupt
+2019-08-14 12:16:40|4945|ERROR|deephyper:54] Uncaught exception:
+Traceback (most recent call last):
+  File "/Users/yzamora/deephyper/deephyper/evaluator/runner.py", line 36, in <module>
+    retval = func(d)
+  File "/Users/yzamora/deephyper/deephyper/search/nas/model/run/alpha.py", line 85, in run
+    history = trainer.train(with_pred=with_pred, last_only=last_only)
+  File "/Users/yzamora/deephyper/deephyper/search/nas/model/trainer/train_valid.py", line 314, in train
+    validation_steps=self.valid_steps_per_epoch
+  File "/Users/yzamora/miniconda3/envs/deep_hyper/lib/python3.6/site-packages/tensorflow/python/keras/engine/training.py", line 880, in fit
+    validation_steps=validation_steps)
+  File "/Users/yzamora/miniconda3/envs/deep_hyper/lib/python3.6/site-packages/tensorflow/python/keras/engine/training_arrays.py", line 266, in model_iteration
+    batch_outs = f(actual_inputs)
+  File "/Users/yzamora/miniconda3/envs/deep_hyper/lib/python3.6/site-packages/tensorflow/python/keras/backend.py", line 3076, in __call__
+    run_metadata=self.run_metadata)
+  File "/Users/yzamora/miniconda3/envs/deep_hyper/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1439, in __call__
+    run_metadata_ptr)
+KeyboardInterrupt
