@@ -5,8 +5,8 @@ from keras.models import load_model
 import keras as K
 
 # Read in master CSV file
-df = pd.read_csv('all_data.csv', index_col = 0)
-
+#df = pd.read_csv('all_data.csv', index_col = 0)
+df = pd.read_csv('df_master.csv', index_col = 0)
 # Drop columns with NaN
 df = df.dropna(axis=1,how='any')
 df.reset_index(drop=True, inplace=True)
@@ -92,8 +92,8 @@ metric_basis = ['dram_read_throughput', 'dram_write_throughput', 'ipc']
 
 import matplotlib.pyplot as plt
 
-colors = ("black", "red", "green", "blue")
-groups = ('backprop', 'hybridsort', 'kmeans', 'srad', 'stream')
+colors = ("black", "red", "green", "blue", "cyan", "pink","yellow")
+groups = ('backprop', 'hybridsort', 'kmeans', 'srad', 'stream', 'gaussian','leukocyte')
 
 df_plot = df_joined[df_joined['memory_bound_V100'] == 1].copy()
 
@@ -161,7 +161,7 @@ model = load_model('12deeper-noappweight_membounds2_dram_kmeans_zerobias.h5',cus
 ##testing deephyper returned model
 
 ##model_path = '/Users/yzamora/power/nvidia_gpus/all_apps/deephyper_models/best_model_18_per20.h5'
-model_path = '/Users/yzamora/power/nvidia_gpus/all_apps/best_deephyper_mls/AL_one_10-POST_best.h5'
+model_path = '/Users/yzamora/power/nvidia_gpus/all_apps/best_deephyper_mls/AL_one_20-POST_best.h5'
 model = tf.keras.models.load_model(model_path,
     custom_objects={
         'r2': selectMetric('r2')
@@ -172,8 +172,8 @@ model = tf.keras.models.load_model(model_path,
 
 df_plot = df_joined[df_joined['memory_bound_V100'] == 1].copy()
 
-colors = ("black", "red", "green", "blue" ,"pink")
-groups = ('backprop', 'hybridsort', 'kmeans', 'srad')
+colors = ("black", "red", "green", "blue" ,"pink", "cyan", "yellow")
+groups = ('backprop', 'hybridsort', 'kmeans', 'srad', 'stream','gaussian','leukocyte')
 
 ##df_plot = df_joined[df_joined['memory_bound_V100'] == 1].copy()
 df_plot = df_joined.copy()
@@ -182,8 +182,8 @@ fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(15,10))
 for color, group in zip(colors, groups):
     df_predict = df_plot[df_plot['application_name_V100'] == group].copy()
     indices_to_predict = [int(i) for i in df_predict['master_index_P100'].values]
+    import pdb; pdb.set_trace()
     prediction = model.predict(scaled_data_[indices_to_predict])
-    #import pdb; pdb.set_trace()
     ##x_col_ind = df_col_ref.columns.get_loc(metric_basis[2])
     ##x = prediction[:,x_col_ind]
 
@@ -198,7 +198,9 @@ for color, group in zip(colors, groups):
 plt.legend(loc='upper left')
 plt.ylabel("Predicted IPC")
 plt.xlabel('True IPC')
-plt.title('DH + AL: 10 Percent of data')
+plt.ylim([-2,2])
+plt.plot(np.arange(-2,3),np.arange(-2,3))
+plt.title('DH + AL: 20 Percent of data')
 plt.show()
 
     #ax.scatter(prediction,scaled_data_[indices, 96])
