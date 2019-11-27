@@ -3,6 +3,7 @@ from keras.models import load_model
 import keras.backend as K
 from sklearn.metrics import r2_score
 import tensorflow as tf
+import keras
 import glob
 import os
 import sys
@@ -10,14 +11,19 @@ sys.path.append('/Users/yzamora/deephyper/deephyper/search/nas/model')
 from train_utils import selectMetric
 import scipy as sp
 import pandas as pd
+import pickle
 
 
 def get_metrics(model_path, X_val_path, y_val_path, predict_column):
-    model = tf.keras.models.load_model(model_path,
-        custom_objects={
-            'r2': selectMetric('r2')
-        }
-    )
+    if "RF_" in model_path:
+        model = pickle.load(open(model_path,'rb'))
+    else:
+        model = tf.keras.models.load_model(model_path,
+            custom_objects={
+                'r2': selectMetric('r2')
+            }
+        )
+
     X_test = np.load(X_val_path)
     y_test = np.load(y_val_path)
 
@@ -37,8 +43,13 @@ def get_metrics(model_path, X_val_path, y_val_path, predict_column):
     y_test = ipc_scaler.inverse_transform(y_test)
 
     def mean_absolute_percentage_error(y_true, y_pred):
-        y_true, y_pred = np.array(y_true), np.array(y_pred)
-        return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
+        """y_true, y_pred = np.array(y_true), np.array(y_pred)
+        return np.mean(np.abs((y_true - y_pred) / y_true)) * 100"""
+        diffs = []
+        for v in range(len(y_true)):
+            #diffs.append(abs(max(y_pred[v], 0.0) - y_true[v]) / y_true[v])
+            diffs.append(abs(y_pred[v] - y_true[v]) / y_true[v])
+        return np.mean(diffs) * 100.0, np.std(diffs) * 100.0
 
     normX_testV = np.mean(np.mean(np.square(y_test),axis=0))
     #relative to the full scale of all the test data - 3x bigger because it's one number scaling across all metrics
@@ -50,19 +61,20 @@ def get_metrics(model_path, X_val_path, y_val_path, predict_column):
     MAE = np.mean(np.abs(y_pred.flatten() - y_test.flatten()))
     RMSE = np.sqrt(np.power(y_test.flatten()- y_pred.flatten(), 2).mean())
     R2 = r2_score(y_test,y_pred)
-    MAPE = mean_absolute_percentage_error(y_test,y_pred)
+    MAPE, MAPE_std = mean_absolute_percentage_error(y_test,y_pred)
     """"""
     print ("R:", R)
     print ("MAE:", MAE)
     print ("RMSE:", RMSE)
     print("R2:", R2)
-    print("MAPE", MAPE)
-    return R, MAE, RMSE, R2, MAPE
+    print("MAPE:", MAPE)
+    print("MAPE-std:", MAPE_std)
+    return R, MAE, RMSE, R2, MAPE, MAPE_std
 
 
-root_model_dir = "/Users/yzamora/power/nvidia_gpus/all_apps/best_deephyper_mls"
+root_model_dir = "/Users/yzamora/power/nvidia_gpus/all_apps/deephyper_final_models"
 root_data_dir = "/Users/yzamora/active_learning"
-output_csv_path = "/Users/yzamora/active_learning/dataframe_summary_ipconly_shortc.csv"
+output_csv_path = "/Users/yzamora/active_learning/dataframe_summary_ipc_std.csv"
 
 do_summary = True
 do_plot = True
@@ -80,13 +92,16 @@ if do_summary:
         "R2": [],
         "MAPE":[],
         "USE_IPC":[],
+        "MAPE_std":[],
     }
 
+    #for loop, model_path in enumerate(glob.glob(root_model_dir + "/*.h5")):
     for loop, model_path in enumerate(glob.glob(root_model_dir + "/*.h5")):
+
         stype, mtype, percent = os.path.basename(model_path).split("_")[:3]
         percent = int(percent.split("-")[0])
         stype_use = stype
-        if stype=='C': stype_use = 'RANDOM'
+        if stype=='C' or stype=='RF': stype_use = 'RANDOM'
         # Get appropriate validation data
         sub_dir = root_data_dir + "/" + mtype + "_" + stype_use + "_indices"
 
@@ -108,7 +123,7 @@ if do_summary:
                     col = None
             else:
                 col = None
-            R, MAE, RMSE, R2, MAPE = get_metrics(model_path, X_val_path, y_val_path, col)
+            R, MAE, RMSE, R2, MAPE, MAPE_std = get_metrics(model_path, X_val_path, y_val_path, col)
 
             # Update Summary Dict
             summary["stype"].append(stype)
@@ -119,6 +134,7 @@ if do_summary:
             summary["RMSE"].append(RMSE)
             summary["R2"].append(R2)
             summary["MAPE"].append(MAPE)
+            summary["MAPE_std"].append(MAPE_std)
             summary["USE_IPC"].append(USE_IPC)
 
         print("Loop", loop, "done.")
@@ -179,10 +195,13 @@ if do_plot:
     ax[3].set_xlabel("Percent")
     ax[3].legend(loc="best")
 
-    ax[4].set_title("MAPE (IPC only: " + str(bool(use_ipc)) + ")")
+    #ax[4].set_title("MAPE (IPC only: " + str(bool(use_ipc)) + ")")
+    ax[4].set_title("MAPE of P100 to V100 IPC predictions")
     ax[4].set_ylabel("MAPE")
     ax[4].set_xlabel("Percent")
     ax[4].legend(loc="best")
+    ax[4].set_ylim([0,30])
+
 
 
     plt.show()
