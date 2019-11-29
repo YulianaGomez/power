@@ -74,7 +74,8 @@ def get_metrics(model_path, X_val_path, y_val_path, predict_column):
 
 root_model_dir = "/Users/yzamora/power/nvidia_gpus/all_apps/deephyper_final_models"
 root_data_dir = "/Users/yzamora/active_learning"
-output_csv_path = "/Users/yzamora/active_learning/dataframe_summary_ipc_std.csv"
+root_data_dir_al = "/Users/yzamora/Desktop/training_sets"
+output_csv_path = "/Users/yzamora/active_learning/dataframe_summary_ipc_newAL.csv"
 
 do_summary = True
 do_plot = True
@@ -103,14 +104,24 @@ if do_summary:
         stype_use = stype
         if stype=='C' or stype=='RF': stype_use = 'RANDOM'
         # Get appropriate validation data
-        sub_dir = root_data_dir + "/" + mtype + "_" + stype_use + "_indices"
+        sub_dir = root_data_dir + "/"+ mtype +'_' + stype_use + "_indices"
 
+
+        #print(sub_dir)
+        #import pdb; pdb.set_trace()
         if not os.path.exists(sub_dir):
             print("WARNING: Skipping missing:", sub_dir)
             continue
 
         X_val_path = sub_dir + "/X_val_" + stype_use + "_" + str(percent) + "per_" + mtype + ".npy"
         y_val_path = sub_dir + "/y_val_" + stype_use + "_" + str(percent) + "per_" + mtype + ".npy"
+
+        if stype in ['CAL', 'RFAL']:
+            sub_dir = root_data_dir_al
+            stype_use = 'AL'
+            X_val_path = sub_dir + "/X_val_" + stype_use + "_" + str(percent) + "per_" + mtype + ".npy"
+            y_val_path = sub_dir + "/y_val_" + stype_use + "_" + str(percent) + "per_" + mtype + ".npy"
+
 
         for USE_IPC in [0,1]:
 

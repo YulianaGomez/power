@@ -3,6 +3,7 @@ import warnings
 import numpy as np
 import glob
 import os
+import sys
 from sklearn.preprocessing import StandardScaler
 #
 #warnings.filterwarnings("ignore")
@@ -41,18 +42,27 @@ df_master_p100 = df[df['architecture'] == "P100"].loc[df_master_index_p100].drop
 ##p100_activeLearn_points = pd.read_csv('AL_Var_indices_size_250_10per.txt', names=["vals"]).iloc[:,0]
 ##path = '/Users/yzamora/power/nvidia_gpus/all_apps/mem_bound/'
 """
-path = '/Users/yzamora/Desktop/ActiveLearningFrameworkTutorial/AL_indices/'
-p100_activeLearn_points = pd.read_csv(path + 'AL_Var_indices_size_250_10per.txt', names=["vals"]).iloc[:,0]
+path = '/Users/yzamora/Desktop/ActiveLearningFrameworkTutorial/AL_var_indices/'
+p100_activeLearn_points = pd.read_csv(path + 'AL_Var_indices_size_250_10per.txt', names=["vals"]).iloc[:,0]"""
 ##p100_activeLearn_points = pd.read_csv(path + 'Random_Var_indices_size_250_20per.txt', names=["vals"]).iloc[:,0]
-"""
-#either AL or random
-path = '/Users/yzamora/Desktop/ActiveLearningFrameworkTutorial/AL_indices/'
-path_all = glob.glob('/Users/yzamora/Desktop/ActiveLearningFrameworkTutorial/AL_indices/*')
+
+#either 'AL_indices' or 'random_indices' path to indices created
+#(txt files with unique identifiers)
+selection_txt = 'AL_Var_indices'
+path = '/Users/yzamora/Desktop/ActiveLearningFrameworkTutorial/' + selection_txt + '/'
+path_all = glob.glob('/Users/yzamora/Desktop/ActiveLearningFrameworkTutorial/' + selection_txt + '/*')
+
+##path = '/Users/yzamora/Desktop/ActiveLearningFrameworkTutorial/random_indices/'
+"""path = '/Users/yzamora/Desktop/ActiveLearningFrameworkTutorial/AL_var_indices/'
+p100_activeLearn_points = pd.read_csv(path + 'AL_Var_indices_size_250_20per.txt', names=["vals"]).iloc[:,0]"""
+
 
 for f in path_all:
+    #if True:
     indice_dir_name = os.path.basename(f)
+    print(indice_dir_name)
     p100_activeLearn_points = pd.read_csv(path + indice_dir_name, names=["vals"]).iloc[:,0]
-
+    ##indice_dir_name = 'AL_Var_indices_size_250_20per.txt'
     v100_activeLearn_points = p100_activeLearn_points.tolist()
     #creating a list of all strings
     v100_activeLearn_points = [val.replace("P100", "V100") for val in v100_activeLearn_points]
@@ -62,7 +72,8 @@ for f in path_all:
     #Creating pandas dataframe with the specified unique indices
     df_master_p100_activeLearn = df_master_p100.loc[p100_activeLearn_points]
     df_master_v100_activeLearn = df_master_v100.loc[v100_activeLearn_points]
-
+    ##print('df_master_p100_activeLearn', df_master_p100_activeLearn)
+    ##sys.exit(0)
     df_master_p100_NOT_activeLearn = df_master_p100[~df_master_p100.index.isin(p100_activeLearn_points.tolist())]
     df_master_v100_NOT_activeLearn = df_master_v100[~df_master_v100.index.isin(v100_activeLearn_points.tolist())]
 
@@ -149,11 +160,15 @@ for f in path_all:
     # Similarly, we can get the y validation set for "backprop" by:
     #     y_validation_sets["backprop"]
     groups = ['backprop', 'hybridsort', 'kmeans', 'srad', 'stream', 'gaussian','leukocyte']
-    print(indice_dir_name)
+    ##print(indice_dir_name)
+    #import pdb; pdb.set_trace()
+
     uniq_app_id = indice_dir_name.split('_')[0]
     per_app = indice_dir_name.split('_')[-1].split('.')[0]
     for apps in groups:
         print(X_validation_sets[apps].shape, y_validation_sets[apps].shape)
+
         #print((np.reshape(y_validation_sets[apps],(y_validation_sets[apps].shape[0],1))).shape)
-        np.save('specified_application_indices/'+ uniq_app_id + '_' + per_app + '_' + apps + '_x_val',X_validation_sets[apps])
-        np.save('specified_application_indices/'+ uniq_app_id + '_' + per_app + "_" + apps + '_y_val',np.reshape(y_validation_sets[apps],(y_validation_sets[apps].shape[0],1)))
+        print('specified_application_indices/AL_var_val/'+ uniq_app_id + '_' + per_app + '_' + apps + '_x_val')
+        np.save('specified_application_indices/AL_var_val/'+ uniq_app_id + '_' + per_app + '_' + apps + '_x_val',X_validation_sets[apps])
+        np.save('specified_application_indices/AL_var_val/'+ uniq_app_id + '_' + per_app + "_" + apps + '_y_val',np.reshape(y_validation_sets[apps],(y_validation_sets[apps].shape[0],1)))
