@@ -15,22 +15,26 @@ import scipy as sp
 
 #selection type can be either 'Random' or 'AL' or 'C', 'OldNew', 'RF', 'RFAL'
 #change unique to best or best to unique
-selection_type_inputs = ['AL', 'Random', 'C', 'OldNew', 'RF', 'RFAL']
+selection_type_inputs =  ['RFFULL', 'CFFULL']#['AL', 'Random', 'C', 'OldNew', 'RF', 'RFAL', 'CAL', 'RFFULL', 'CFFULL']
 app_single_name = "stream"
 single_run = False
 
 for selection_type in selection_type_inputs:
-    if selection_type == 'C':
-        type_c = 'unique'
-    else:
-        type_c = 'best'
     val_summary_dict = {'Selection':[],'Percent':[],'Application':[],'MAPE':[], 'MAPE-std':[], 'count':[], 'delta_error':[]}
-    model_path = '/Users/yzamora/power/nvidia_gpus/all_apps/deephyper_final_models/' + selection_type +'_one_20-POST_' + type_c
-    #model_path = '/Users/yzamora/power/nvidia_gpus/all_apps/deephyper_models/best_model_18_per20.h5'
+    if selection_type == "RFFULL":
+        model_path = '/Users/yzamora/Desktop/AL_new_models/RF_fullset'
+    elif selection_type == "CFFULL":
+        model_path = '/Users/yzamora/Desktop/AL_new_models/CL_fullset_model'
+    else:
+        if selection_type in ['C', 'CAL']:
+            type_c = 'unique'
+        else:
+            type_c = 'best'
+        model_path = '/Users/yzamora/power/nvidia_gpus/all_apps/deephyper_final_models/' + selection_type +'_one_20-POST_' + type_c
 
     # When using .sav models
     model = None
-    if selection_type in ["RF", "RFAL"]:
+    if selection_type in ["RF", "RFAL", "RFFULL"]:
         model = pickle.load(open(model_path + '.sav','rb'))
     elif selection_type != 'OldNew':
         model = tf.keras.models.load_model(model_path + '.h5',
@@ -39,10 +43,12 @@ for selection_type in selection_type_inputs:
             }
                                        )
 
-    if selection_type in ['C', 'OldNew', 'RF']:
+    if selection_type in ['RFFULL', 'CFFULL']:
+        path = glob.glob('/Users/yzamora/Desktop/fullset_specified_apps/*.npy')
+    elif selection_type in ['C', 'OldNew', 'RF']:
         path = glob.glob('/Users/yzamora/power/nvidia_gpus/all_apps/specified_application_indices/Random_val_indices/Random' + '*.npy')
-    elif selection_type == 'RFAL':
-        path = glob.glob('/Users/yzamora/power/nvidia_gpus/all_apps/specified_application_indices/AL_val_indices/AL*.npy')
+    elif selection_type in ['RFAL', 'CAL']:
+        path = glob.glob('/Users/yzamora/power/nvidia_gpus/all_apps/specified_application_indices/AL_var_val/AL*.npy')
     else:
         path = glob.glob('/Users/yzamora/power/nvidia_gpus/all_apps/specified_application_indices/' + selection_type + '_val_indices/'+ selection_type + '*.npy')
 
@@ -59,8 +65,14 @@ for selection_type in selection_type_inputs:
             xval_values = np.load(f)
             #val_summary_dict['Selection'].append(xval_name.split('_')[0])
             val_summary_dict['Selection'].append(selection_type)
-            val_summary_dict['Percent'].append(xval_name.split('_')[1].split('p')[0])
-            val_summary_dict['Application'].append(xval_name.split('_')[2])
+
+            if selection_type in ['RFFULL', 'CFFULL']:
+                val_summary_dict['Percent'].append(70)
+                val_summary_dict['Application'].append(xval_name.split('_')[0])
+            else:
+                val_summary_dict['Percent'].append(xval_name.split('_')[1].split('p')[0])
+                val_summary_dict['Application'].append(xval_name.split('_')[2])
+
             yval_path = f.replace('x_val','y_val')
             yval_values = np.load(yval_path)
             ##print(xval_name,xval_name.replace('x_val','y_val'))
@@ -152,7 +164,7 @@ for selection_type in selection_type_inputs:
         #print(val_summary_dict)
 
     df_val_summary = pd.DataFrame(val_summary_dict)
-    df_val_summary.to_csv('/Users/yzamora/power/nvidia_gpus/all_apps/specified_application_indices/' + selection_type + '_val_MAPE_error_summary')
+    df_val_summary.to_csv('/Users/yzamora/power/nvidia_gpus/all_apps/specified_application_indices/' + selection_type + '_val_MAPE_fullset_summary')
     ##tabbed twice
 
 """
