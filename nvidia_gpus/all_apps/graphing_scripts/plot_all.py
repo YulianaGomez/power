@@ -124,7 +124,7 @@ if reg_model:
     ##testing deephyper returned model
 else:
     ##model_path = '/Users/yzamora/power/nvidia_gpus/all_apps/best_deephyper_mls/AL_one_20-POST_best.h5'
-    model_path = '/Users/yzamora/power/nvidia_gpus/all_apps/deephyper_models/best_model_18_per20.h5'
+    model_path = '/Users/yzamora/power/nvidia_gpus/all_apps/deephyper_final_models/AL_one_20-POST_best.h5'
     model = tf.keras.models.load_model(model_path,
         custom_objects={
             'r2': selectMetric('r2')

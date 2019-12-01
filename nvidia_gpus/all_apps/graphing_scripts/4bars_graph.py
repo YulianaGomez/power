@@ -11,6 +11,7 @@ Random_df = pd.read_csv('/Users/yzamora/power/nvidia_gpus/all_apps/specified_app
 OldNew_df = pd.read_csv('/Users/yzamora/power/nvidia_gpus/all_apps/specified_application_indices/OldNew_val_MAPE_' + error_type + '_summary')
 RF_df = pd.read_csv('/Users/yzamora/power/nvidia_gpus/all_apps/specified_application_indices/RF_val_MAPE_' + error_type + '_summary')
 RFAL_df = pd.read_csv('/Users/yzamora/power/nvidia_gpus/all_apps/specified_application_indices/RFAL_val_MAPE_' + error_type + '_summary')
+DHFull_df = pd.read_csv('/Users/yzamora/power/nvidia_gpus/all_apps/specified_application_indices/RFAL_val_MAPE_' + error_type + '_summary')
 #master_df = pd.concat([AL_df,C_df,Random_df,OldNew_df,RF_df,RFAL_df])
 master_df = pd.concat([OldNew_df, RF_df, RFAL_df, C_df, CAL_df, Random_df, AL_df])
 groups = ['Selection', 'Percent', 'Application', 'MAPE']
@@ -175,8 +176,9 @@ autolabel(al)
 
 # Set the y axis label
 ax.set_ylabel('MAPE')
+ax.set_xlabel("Applications")
 # Set the chart's title
-ax.set_title('MAPE for Random, AL, Conventional, Random Forest, and Old vs New IPC (20 Percent)')
+ax.set_title('MAPE Models with 20 Percent training data')
 # Set the position of the x ticks
 ax.set_xticks([p + 2.5*width for p in range(len(df_plot['OldNew']))])
 # Set the labels for the x ticks
@@ -187,5 +189,7 @@ plt.ylim([0, max( df_plot['OldNew'] + df_plot['RF'] + df_plot['RFAL'] + df_plot[
 ax.set_ylim([0,80])
 # Adding the legend and showing the plot
 plt.legend(['Old to New', 'Random Forest', 'Random Forest + AL', 'Conv_DL', 'Conv_DL + AL', 'DH', 'DH + AL'], loc='upper right')
+##plt.legend(['Old to New', 'Random Forest', 'Random Forest + AL', 'Conv_DL', 'Conv_DL + AL', 'DH'], loc='upper right')
+
 plt.grid()
 plt.show()

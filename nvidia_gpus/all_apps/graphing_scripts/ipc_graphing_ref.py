@@ -15,7 +15,7 @@ import scipy as sp
 
 #selection type can be either 'Random' or 'AL' or 'C', 'OldNew', 'RF', 'RFAL'
 #change unique to best or best to unique
-selection_type_inputs =  ['RFFULL', 'CFFULL']#['AL', 'Random', 'C', 'OldNew', 'RF', 'RFAL', 'CAL', 'RFFULL', 'CFFULL']
+selection_type_inputs =  ['OldNew']#['RFFULL', 'CFFULL','AL', 'Random', 'C', 'OldNew', 'RF', 'RFAL', 'CAL', 'RFFULL', 'CFFULL']
 app_single_name = "stream"
 single_run = False
 
@@ -25,6 +25,8 @@ for selection_type in selection_type_inputs:
         model_path = '/Users/yzamora/Desktop/AL_new_models/RF_fullset'
     elif selection_type == "CFFULL":
         model_path = '/Users/yzamora/Desktop/AL_new_models/CL_fullset_model'
+    elif selection_type == "DHFULL":
+        model_path = "/Users/yzamora/power/nvidia_gpus/all_apps/deephyper_final_models/fullsetdata_70-VPOST_best"
     else:
         if selection_type in ['C', 'CAL']:
             type_c = 'unique'
@@ -43,11 +45,11 @@ for selection_type in selection_type_inputs:
             }
                                        )
 
-    if selection_type in ['RFFULL', 'CFFULL']:
+    if selection_type in ['RFFULL', 'CFFULL', 'DHFULL', 'OldNew']:
         path = glob.glob('/Users/yzamora/Desktop/fullset_specified_apps/*.npy')
     elif selection_type in ['C', 'OldNew', 'RF']:
         path = glob.glob('/Users/yzamora/power/nvidia_gpus/all_apps/specified_application_indices/Random_val_indices/Random' + '*.npy')
-    elif selection_type in ['RFAL', 'CAL']:
+    elif selection_type in ['RFAL', 'CAL','AL']:
         path = glob.glob('/Users/yzamora/power/nvidia_gpus/all_apps/specified_application_indices/AL_var_val/AL*.npy')
     else:
         path = glob.glob('/Users/yzamora/power/nvidia_gpus/all_apps/specified_application_indices/' + selection_type + '_val_indices/'+ selection_type + '*.npy')
@@ -66,7 +68,7 @@ for selection_type in selection_type_inputs:
             #val_summary_dict['Selection'].append(xval_name.split('_')[0])
             val_summary_dict['Selection'].append(selection_type)
 
-            if selection_type in ['RFFULL', 'CFFULL']:
+            if selection_type in ['RFFULL', 'CFFULL','DHFULL', 'OldNew']:
                 val_summary_dict['Percent'].append(70)
                 val_summary_dict['Application'].append(xval_name.split('_')[0])
             else:
@@ -164,7 +166,7 @@ for selection_type in selection_type_inputs:
         #print(val_summary_dict)
 
     df_val_summary = pd.DataFrame(val_summary_dict)
-    df_val_summary.to_csv('/Users/yzamora/power/nvidia_gpus/all_apps/specified_application_indices/' + selection_type + '_val_MAPE_fullset_summary')
+    df_val_summary.to_csv('/Users/yzamora/power/nvidia_gpus/all_apps/specified_application_indices/' + selection_type + '_val_MAPE_newvar_summary')
     ##tabbed twice
 
 """
